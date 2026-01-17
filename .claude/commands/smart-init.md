@@ -1,0 +1,1 @@
+/home/anombyte/.claude/commands/smart-init.md

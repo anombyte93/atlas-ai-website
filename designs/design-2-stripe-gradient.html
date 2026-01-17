@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atlas AI - Custom AI tools and automation for Australian businesses.">
+    <title>Atlas AI - AI That Works For Your Business</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+            --indigo: #635bff;
+            --cyan: #00d4ff;
+            --pink: #ff80b5;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--gray-900);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.15s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--indigo);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--gray-900);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-700);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gray-400);
+        }
+
+        /* Hero with animated gradient */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse at 70% 20%, rgba(99, 91, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 30% 80%, rgba(255, 128, 181, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 90% 60%, rgba(0, 212, 255, 0.1) 0%, transparent 40%);
+            animation: gradient-shift 15s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, 5%) rotate(3deg); }
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99, 91, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 91, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--gray-100);
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 32px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.75rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--indigo) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .hero-visual {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .browser-frame {
+            background: var(--gray-900);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 25px 100px -10px rgba(99, 91, 255, 0.25);
+        }
+
+        .browser-bar {
+            display: flex;
+            gap: 8px;
+            padding-bottom: 12px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray-700);
+        }
+
+        .browser-screen {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 8px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.125rem;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .screen-content {
+            max-width: 400px;
+        }
+
+        .screen-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .screen-content p {
+            opacity: 0.7;
+            font-size: 0.9375rem;
+        }
+
+        /* Features grid */
+        section {
+            padding: 120px 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--gray-500);
+            font-size: 1.125rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: var(--gray-50);
+            border-radius: 20px;
+            padding: 40px 32px;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            background: var(--gray-100);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--cyan) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--gray-500);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-stat {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--indigo);
+        }
+
+        /* Stats bar */
+        .stats-section {
+            background: var(--gray-900);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+            margin-top: 8px;
+        }
+
+        /* Process */
+        .process-section {
+            background: var(--gray-50);
+        }
+
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--indigo), var(--cyan));
+        }
+
+        .process-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-dot {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border: 3px solid var(--indigo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: 700;
+            color: var(--indigo);
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--gray-500);
+            font-size: 0.8125rem;
+            max-width: 160px;
+            margin: 0 auto;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, var(--indigo) 0%, #4f46e5 100%);
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            opacity: 0.85;
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: var(--indigo);
+        }
+
+        .cta-section .btn-primary:hover {
+            background: var(--gray-100);
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 24px;
+            text-align: center;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        footer p {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--gray-700);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--indigo);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .process-timeline {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .process-timeline::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">Atlas AI</a>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#contact" class="btn btn-primary">Get Started</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-gradient"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="badge">
+                <span class="badge-dot"></span>
+                Now accepting new clients for Q1 2025
+            </div>
+            <h1>AI infrastructure for Australian business</h1>
+            <p>Custom automation and AI tools that save time, cut costs, and integrate seamlessly with your existing workflow.</p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">
+                    Start building
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <a href="#features" class="btn btn-outline">Learn more</a>
+            </div>
+
+            <div class="hero-visual">
+                <div class="browser-frame">
+                    <div class="browser-bar">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <div class="browser-screen">
+                        <div class="screen-content">
+                            <h3>Your AI assistant is ready</h3>
+                            <p>Custom-built to understand your business, trained on your data, connected to your systems.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Average time saved</div>
+                </div>
+                <div>
+                    <div class="stat-number">4-8</div>
+                    <div class="stat-label">Weeks to delivery</div>
+                </div>
+                <div>
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Automation uptime</div>
+                </div>
+                <div>
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Australian owned</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything you need</h2>
+                <p>Practical AI solutions designed around how you actually work</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>AI Integration</h3>
+                    <p>Custom AI tools that integrate directly into your business. Customer support automation, document processing, and more.</p>
+                    <div class="feature-stat">15-30 hrs/week saved</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Workflow Automation</h3>
+                    <p>Turn weeks of manual work into one-click operations. Lead routing, invoice processing, data entry done automatically.</p>
+                    <div class="feature-stat">40% faster processing</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8M12 17v4"/>
+                        </svg>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Modern web applications that drive results. Client portals, SaaS platforms, internal tools built to perform.</p>
+                    <div class="feature-stat">4-8 week delivery</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How we work</h2>
+                <p>From idea to production in weeks, not months</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-dot">1</div>
+                    <h4>Discovery</h4>
+                    <p>30-min call to understand your challenges</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-dot">2</div>
+                    <h4>Design</h4>
+                    <p>Solution architecture mapped to your workflow</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-dot">3</div>
+                    <h4>Build</h4>
+                    <p>Rapid development with weekly demos</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-dot">4</div>
+                    <h4>Launch</h4>
+                    <p>Go live with ongoing support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Ready to get started?</h2>
+            <p>Book a free discovery call and see what AI can do for your business.</p>
+            <a href="mailto:hello@atlas-ai.au" class="btn btn-primary">
+                Book a call
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Atlas AI. Built in Australia. <a href="mailto:hello@atlas-ai.au">hello@atlas-ai.au</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

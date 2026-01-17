@@ -1,0 +1,114 @@
+; ═══════════════════════════════════════════════════════════════════════════
+; ATLAS-AI.COM DNS ZONE TEMPLATE
+; ═══════════════════════════════════════════════════════════════════════════
+;
+; STATUS: TEMPLATE - NOT APPLIED
+; PURPOSE: Reference for DNS configuration
+; LAST UPDATED: 2025-12-31
+;
+; ⚠️  WARNING: Review carefully before applying to production DNS
+;
+; ═══════════════════════════════════════════════════════════════════════════
+
+$ORIGIN atlas-ai.com.
+$TTL 3600
+
+; ───────────────────────────────────────────────────────────────────────────
+; SOA RECORD (managed by registrar/DNS provider)
+; ───────────────────────────────────────────────────────────────────────────
+; @    IN    SOA    ns1.provider.com. admin.atlas-ai.com. (
+;                   2025123101  ; Serial (YYYYMMDDNN)
+;                   3600        ; Refresh (1 hour)
+;                   600         ; Retry (10 minutes)
+;                   604800      ; Expire (1 week)
+;                   300         ; Minimum TTL (5 minutes)
+;                   )
+
+; ───────────────────────────────────────────────────────────────────────────
+; MX RECORDS - Google Workspace
+; ───────────────────────────────────────────────────────────────────────────
+; Route email to Google's servers
+
+@    IN    MX    1     ASPMX.L.GOOGLE.COM.
+@    IN    MX    5     ALT1.ASPMX.L.GOOGLE.COM.
+@    IN    MX    5     ALT2.ASPMX.L.GOOGLE.COM.
+@    IN    MX    10    ALT3.ASPMX.L.GOOGLE.COM.
+@    IN    MX    10    ALT4.ASPMX.L.GOOGLE.COM.
+
+; ───────────────────────────────────────────────────────────────────────────
+; SPF RECORD - Sender Policy Framework
+; ───────────────────────────────────────────────────────────────────────────
+; Authorizes Google to send email on behalf of this domain
+; Using ~all (softfail) initially - change to -all after DMARC monitoring
+
+@    IN    TXT    "v=spf1 include:_spf.google.com ~all"
+
+; ───────────────────────────────────────────────────────────────────────────
+; DKIM RECORD - DomainKeys Identified Mail
+; ───────────────────────────────────────────────────────────────────────────
+; The public key value must be generated from Google Admin Console
+; Path: Apps → Google Workspace → Gmail → Authenticate email
+; Select 2048-bit key length
+
+google._domainkey    IN    TXT    "v=DKIM1; k=rsa; p=<REPLACE_WITH_GENERATED_KEY>"
+
+; ───────────────────────────────────────────────────────────────────────────
+; DMARC RECORD - Domain-based Message Authentication
+; ───────────────────────────────────────────────────────────────────────────
+; Starting with p=none (monitor mode)
+; Progression: none → quarantine (10% → 50% → 100%) → reject
+
+_dmarc    IN    TXT    "v=DMARC1; p=none; rua=mailto:dmarc-reports@atlas-ai.com; ruf=mailto:dmarc-forensics@atlas-ai.com; fo=1; sp=none; adkim=r; aspf=r"
+
+; ───────────────────────────────────────────────────────────────────────────
+; GOOGLE WORKSPACE VERIFICATION (if not already done)
+; ───────────────────────────────────────────────────────────────────────────
+; Get verification code from Google Admin Console during setup
+
+; @    IN    TXT    "google-site-verification=<VERIFICATION_CODE>"
+
+; ───────────────────────────────────────────────────────────────────────────
+; MTA-STS - Mail Transfer Agent Strict Transport Security (Optional)
+; ───────────────────────────────────────────────────────────────────────────
+; Requires: https://mta-sts.atlas-ai.com/.well-known/mta-sts.txt
+
+_mta-sts    IN    TXT    "v=STSv1; id=20251231"
+
+; ───────────────────────────────────────────────────────────────────────────
+; BIMI RECORD (Optional - Brand Indicator for Message Identification)
+; ───────────────────────────────────────────────────────────────────────────
+; Requires: VMC certificate, SVG logo, DMARC at p=quarantine minimum
+
+; default._bimi    IN    TXT    "v=BIMI1; l=https://atlas-ai.com/brand/logo.svg; a=https://atlas-ai.com/brand/vmc.pem"
+
+; ───────────────────────────────────────────────────────────────────────────
+; CAA RECORD - Certificate Authority Authorization
+; ───────────────────────────────────────────────────────────────────────────
+; Restrict which CAs can issue certificates for this domain
+
+@    IN    CAA    0    issue    "letsencrypt.org"
+@    IN    CAA    0    issuewild "letsencrypt.org"
+@    IN    CAA    0    iodef    "mailto:security@atlas-ai.com"
+
+; ───────────────────────────────────────────────────────────────────────────
+; A/AAAA RECORDS - Web hosting (if applicable)
+; ───────────────────────────────────────────────────────────────────────────
+; Point to web server IP when ready
+
+; @        IN    A       <WEB_SERVER_IPv4>
+; @        IN    AAAA    <WEB_SERVER_IPv6>
+; www      IN    CNAME   @
+
+; ───────────────────────────────────────────────────────────────────────────
+; FUTURE: NEXTCLOUD SUBDOMAIN (DEFERRED)
+; ───────────────────────────────────────────────────────────────────────────
+; DO NOT APPLY YET - Domain migration is intentionally postponed
+; Currently using: cloud.ironbarksecure.com
+
+; cloud    IN    CNAME   <NEXTCLOUD_SERVER_HOSTNAME>
+; or
+; cloud    IN    A       <NEXTCLOUD_SERVER_IP>
+
+; ═══════════════════════════════════════════════════════════════════════════
+; END OF ZONE TEMPLATE
+; ═══════════════════════════════════════════════════════════════════════════

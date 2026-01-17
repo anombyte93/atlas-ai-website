@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atlas AI - Custom AI tools and automation for Australian businesses.">
+    <title>Atlas AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #fafafa;
+            --text-muted: #a1a1a1;
+            --text-subtle: #666;
+            --accent: #5e5ce6;
+            --accent-hover: #7876e6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation - Linear style */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            border-radius: 6px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 4px;
+            background: var(--surface);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-link.active {
+            color: var(--text);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero - Ultra minimal */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px 120px;
+            position: relative;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(94, 92, 230, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            text-align: center;
+            margin-bottom: 24px;
+            max-width: 900px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 540px;
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-large {
+            padding: 12px 24px;
+            font-size: 0.875rem;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-subtle);
+        }
+
+        /* Features - Bento grid */
+        section {
+            padding: 80px 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bento-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.2s;
+        }
+
+        .bento-card:hover {
+            border-color: var(--text-subtle);
+        }
+
+        .bento-card.featured {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 900px) {
+            .bento-card.featured {
+                grid-column: span 1;
+            }
+        }
+
+        .bento-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .bento-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .bento-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .bento-stat {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8125rem;
+        }
+
+        .bento-stat span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Process - Minimal timeline */
+        .process-section {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .process-step {
+            text-align: left;
+        }
+
+        .step-num {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .process-step h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+        }
+
+        .cta-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 64px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 200px;
+            background: radial-gradient(ellipse, rgba(94, 92, 230, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-box h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .cta-box .btn {
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-size: 0.8125rem;
+            color: var(--text-subtle);
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 16px;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon"></div>
+            Atlas AI
+        </a>
+        <div class="nav-center">
+            <a href="#features" class="nav-link active">Features</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#docs" class="nav-link">Docs</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="btn btn-ghost">Sign in</a>
+            <a href="#contact" class="btn btn-primary">Get started</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            Now accepting new clients
+        </div>
+        <h1>AI that works for your business</h1>
+        <p class="hero-subtitle">Custom automation and AI tools for Australian businesses. Save time, cut costs, and integrate seamlessly with your workflow.</p>
+        <div class="hero-cta">
+            <a href="#contact" class="btn btn-large btn-accent">Get started</a>
+            <a href="#features" class="btn btn-large btn-secondary">Learn more</a>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Features</div>
+                <h2>Everything you need</h2>
+            </div>
+
+            <div class="bento-grid">
+                <div class="bento-card featured">
+                    <div class="bento-icon">
+                        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>AI Integration</h3>
+                    <p>Custom AI tools that integrate directly into your business processes. From customer support automation to intelligent document processing, we turn AI from hype into measurable ROI.</p>
+                    <div class="bento-stat">
+                        <span>15-30 hours</span> saved weekly on average
+                    </div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Workflow Automation</h3>
+                    <p>Turn weeks of manual work into one-click operations. Lead routing, invoice processing, data entry.</p>
+                    <div class="bento-stat">
+                        <span>40%</span> faster processing
+                    </div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8M12 17v4"/>
+                        </svg>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Modern web applications that drive results. Client portals, SaaS platforms, internal tools.</p>
+                    <div class="bento-stat">
+                        <span>4-8 weeks</span> to delivery
+                    </div>
+                </div>
+
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Data Security</h3>
+                    <p>Your data stays yours. Australian-hosted infrastructure with enterprise-grade security.</p>
+                </div>
+
+                <div class="bento-card featured">
+                    <div class="bento-icon">
+                        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3>Ongoing Support</h3>
+                    <p>We don't just build and leave. Every project includes ongoing support, monitoring, and optimization. Your AI keeps getting smarter as your business grows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Process</div>
+                <h2>From idea to production</h2>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-num">01</div>
+                    <h4>Discovery</h4>
+                    <p>30-minute call to understand your challenges and goals.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">02</div>
+                    <h4>Design</h4>
+                    <p>Solution architecture mapped to your workflow.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">03</div>
+                    <h4>Build</h4>
+                    <p>Rapid development with regular demos.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">04</div>
+                    <h4>Launch</h4>
+                    <p>Go live with confidence and ongoing support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <div class="cta-glow"></div>
+                <h2>Ready to get started?</h2>
+                <p>Book a free discovery call and see what AI can do for your business.</p>
+                <a href="mailto:hello@atlas-ai.au" class="btn btn-large btn-accent">Book a call</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Atlas AI. Built in Australia.</p>
+        <div class="footer-links">
+            <a href="mailto:hello@atlas-ai.au">Contact</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
