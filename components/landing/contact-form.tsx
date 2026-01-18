@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface FormData {
   name: string;
@@ -26,22 +26,8 @@ export function ContactForm() {
     referral: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [leadScore, setLeadScore] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Update progress dots when step changes
-  useEffect(() => {
-    const dots = document.querySelectorAll('.progress-dot');
-    dots.forEach((dot, index) => {
-      const step = index + 1;
-      dot.classList.remove('active', 'completed');
-      if (step === currentStep) {
-        dot.classList.add('active');
-      } else if (step < currentStep) {
-        dot.classList.add('completed');
-      }
-    });
-  }, [currentStep]);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
@@ -62,38 +48,8 @@ export function ContactForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const calculateLeadScore = (): number => {
-    let score = 0;
-
-    // Service selection scoring
-    if (formData.service === 'Profit Optimization') score += 25;
-    else if (formData.service === 'Performance Automation') score += 20;
-    else if (formData.service === 'Cybersecurity AI') score += 20;
-    else if (formData.service === 'Custom AI Infrastructure') score += 25;
-    else if (formData.service === 'Not sure yet') score += 5;
-
-    // Team size scoring
-    if (formData.team_size === '51-200' || formData.team_size === '200+') score += 25;
-    else if (formData.team_size === '21-50') score += 20;
-    else if (formData.team_size === '6-20') score += 15;
-    else if (formData.team_size === '1-5') score += 10;
-
-    // Timeline scoring
-    if (formData.timeline === 'ASAP') score += 25;
-    else if (formData.timeline === '1-2 months') score += 20;
-    else if (formData.timeline === '3-6 months') score += 10;
-    else if (formData.timeline === 'Just exploring') score += 5;
-
-    return score;
-  };
-
   const handleNext = () => {
     if (!validateStep(currentStep)) return;
-
-    if (currentStep === 2) {
-      setLeadScore(calculateLeadScore());
-    }
-
     setCurrentStep(currentStep + 1);
   };
 
@@ -104,29 +60,24 @@ export function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    const finalScore = calculateLeadScore();
-    const qualified = finalScore >= 50;
+    setSubmitError(null); // Clear previous error when retrying
 
     try {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          lead_score: finalScore,
-          qualified: qualified.toString()
-        })
+        body: JSON.stringify(formData)  // Backend handles scoring
       });
 
       if (response.ok) {
         setCurrentStep(4); // Success step
       } else {
-        alert('Something went wrong. Please email us at contact@atlas-ai.au');
+        const data = await response.json().catch(() => ({ error: 'Unknown error' }));
+        setSubmitError(data.error || 'Something went wrong. Please try again or email us at contact@atlas-ai.au');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Something went wrong. Please email us at contact@atlas-ai.au');
+      setSubmitError('Something went wrong. Please try again or email us at contact@atlas-ai.au');
     } finally {
       setIsSubmitting(false);
     }
@@ -200,6 +151,13 @@ export function ContactForm() {
             </div>
 
             <form onSubmit={handleSubmit}>
+              {/* Error message display */}
+              {submitError && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6" role="alert" aria-live="polite">
+                  <p className="text-sm">{submitError}</p>
+                </div>
+              )}
+
               {/* Step 1: Basic Info */}
               {currentStep === 1 && (
                 <div className="animate-fade-in">
@@ -209,32 +167,51 @@ export function ContactForm() {
                   </p>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">Your name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">Your name *</label>
                     <input
+                      id="name"
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Jane Smith"
                       className={`w-full px-4 py-3.5 border rounded-xl ${errors.name ? 'border-[var(--error)]' : 'border-[#ddd]'}`}
+                      aria-invalid={errors.name ? 'true' : 'false'}
+                      aria-describedby={errors.name ? 'name-error' : undefined}
                     />
-                    {errors.name && <p className="text-[var(--error)] text-xs mt-1.5">{errors.name}</p>}
+                    {errors.name && (
+                      <p id="name-error" className="text-[var(--error)] text-xs mt-1.5" role="alert" aria-live="polite">
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">Work email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">Work email *</label>
                     <input
+                      id="email"
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="jane@company.com.au"
                       className={`w-full px-4 py-3.5 border rounded-xl ${errors.email ? 'border-[var(--error)]' : 'border-[#ddd]'}`}
+                      aria-invalid={errors.email ? 'true' : 'false'}
+                      aria-describedby={errors.email ? 'email-error' : undefined}
                     />
-                    {errors.email && <p className="text-[var(--error)] text-xs mt-1.5">{errors.email}</p>}
+                    {errors.email && (
+                      <p id="email-error" className="text-[var(--error)] text-xs mt-1.5" role="alert" aria-live="polite">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2">What are you looking for? *</label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <label className="block text-sm font-medium mb-2" id="service-label">What are you looking for? *</label>
+                    <div
+                      role="radiogroup"
+                      aria-labelledby="service-label"
+                      aria-describedby={errors.service ? 'service-error' : undefined}
+                      className="grid grid-cols-2 gap-3"
+                    >
                       {['Profit Optimization', 'Performance Automation', 'Cybersecurity AI', 'Custom AI Infrastructure', 'Not sure yet'].map((service) => (
                         <div key={service} className="radio-option relative">
                           <input
@@ -255,6 +232,11 @@ export function ContactForm() {
                         </div>
                       ))}
                     </div>
+                    {errors.service && (
+                      <p id="service-error" className="text-[var(--error)] text-xs mt-1.5" role="alert" aria-live="polite">
+                        {errors.service}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex gap-4 mt-8">
@@ -396,18 +378,17 @@ export function ContactForm() {
                     We&apos;ve received your request and will get back to you within 24 hours.
                   </p>
 
-                  {leadScore >= 50 && (
-                    <div className="bg-[rgba(45,90,74,0.05)] rounded-xl p-6">
-                      <p className="text-[var(--charcoal)] mb-4"><strong>Want to skip the wait?</strong> Book a discovery call directly:</p>
-                      <button type="button" onClick={openCalBooking} className="btn btn-primary">
-                        Book a 30-min call
-                        <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <rect x="3" y="4" width="18" height="18" rx="2"/>
-                          <path d="M16 2v4M8 2v4M3 10h18"/>
-                        </svg>
-                      </button>
-                    </div>
-                  )}
+                  {/* Always show booking prompt - backend handles lead qualification */}
+                  <div className="bg-[rgba(45,90,74,0.05)] rounded-xl p-6">
+                    <p className="text-[var(--charcoal)] mb-4"><strong>Want to skip the wait?</strong> Book a discovery call directly:</p>
+                    <button type="button" onClick={openCalBooking} className="btn btn-primary">
+                      Book a 30-min call
+                      <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               )}
             </form>

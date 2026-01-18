@@ -4,19 +4,22 @@ import { leads } from '@/src/db/schema'
 import { qualifyLead } from '@/lib/lead-scoring'
 import { validateLeadSubmission } from '@/lib/validation'
 import { eq, desc, and } from 'drizzle-orm'
+import { getUser } from '@/lib/supabase-server'
+import { isAdminUser } from '@/lib/admin-check'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Transform snake_case (from form) to camelCase (for database)
+    // Transform snake_case (from form) to camelCase (for database/API layer)
+    // Note: validation schema uses snake_case (team_size) but DB uses camelCase (teamSize)
     const transformedBody = {
       name: body.name,
       email: body.email,
       company: body.company,
-      teamSize: body.team_size,
+      service: body.service,        // Added: service field
+      teamSize: body.team_size,     // team_size from form → teamSize for validation
       timeline: body.timeline,
-      budget: body.budget,
       message: body.message,
       referral: body.referral,
     }
@@ -24,7 +27,7 @@ export async function POST(request: NextRequest) {
     // Validate and sanitize input
     const validatedData = validateLeadSubmission(transformedBody)
 
-    // Calculate lead score and qualification
+    // Calculate lead score and qualification (now includes service scoring)
     const scoredLead = qualifyLead(validatedData)
 
     // Insert lead into database
@@ -32,9 +35,9 @@ export async function POST(request: NextRequest) {
       name: scoredLead.name,
       email: scoredLead.email,
       company: scoredLead.company,
-      teamSize: scoredLead.teamSize,
+      service: scoredLead.service,         // Service field for lead scoring
+      teamSize: scoredLead.teamSize,       // Already camelCase from qualifyLead
       timeline: scoredLead.timeline,
-      budget: scoredLead.budget,
       message: scoredLead.message,
       referral: scoredLead.referral,
       score: scoredLead.score,
@@ -74,6 +77,24 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
+    // SECURITY: Check authentication and authorization
+    const user = await getUser()
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      )
+    }
+
+    // Check if user is an admin (prevents any authenticated user from accessing lead data)
+    const isAdmin = await isAdminUser(user.email || '')
+    if (!isAdmin) {
+      return NextResponse.json(
+        { error: 'Forbidden - Admin access required' },
+        { status: 403 }
+      )
+    }
+
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status')
     const qualified = searchParams.get('qualified')

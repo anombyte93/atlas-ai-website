@@ -47,22 +47,63 @@ export function Navigation() {
         </Link>
       </div>
 
-      <button 
+      <button
         className="md:hidden p-2 bg-transparent border-none cursor-pointer"
         onClick={toggleMobileMenu}
-        aria-label="Menu"
+        aria-label="Toggle navigation menu"
+        aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-menu"
       >
         <svg width="24" height="24" fill="none" stroke={isScrolled ? 'var(--charcoal)' : 'white'} strokeWidth="2" viewBox="0 0 24 24">
           <path d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
 
-      {/* Mobile Menu Dropdown - simplified for now */}
+      {/* Mobile Menu Dropdown with proper ARIA */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white p-4 shadow-lg flex flex-col gap-4 md:hidden">
-           <Link href="#services" className="text-[var(--charcoal)]" onClick={() => setIsMobileMenuOpen(false)}>Services</Link>
-           <Link href="#process" className="text-[var(--charcoal)]" onClick={() => setIsMobileMenuOpen(false)}>Process</Link>
-           <Link href="#contact" className="text-[var(--charcoal)]" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+        <div
+          id="mobile-menu"
+          role="navigation"
+          aria-label="Mobile navigation"
+          className="absolute top-full left-0 right-0 bg-white p-4 shadow-lg flex flex-col gap-4 md:hidden"
+        >
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="self-end p-2 hover:bg-gray-100 rounded-lg"
+          >
+            <svg width="24" height="24" fill="none" stroke="var(--charcoal)" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+          <Link
+            href="#services"
+            className="text-[var(--charcoal)] p-4 hover:bg-gray-50 rounded-lg -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Services
+          </Link>
+          <Link
+            href="#process"
+            className="text-[var(--charcoal)] p-4 hover:bg-gray-50 rounded-lg -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Process
+          </Link>
+          <Link
+            href="#contact"
+            className="text-[var(--charcoal)] p-4 hover:bg-gray-50 rounded-lg -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Contact
+          </Link>
+          <Link
+            href="#contact"
+            className="btn btn-primary !py-3 !px-6 -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Get Started
+          </Link>
         </div>
       )}
     </nav>

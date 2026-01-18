@@ -5,9 +5,9 @@ export const leads = pgTable('leads', {
   name: varchar('name', { length: 255 }).notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   company: varchar('company', { length: 255 }),
+  service: varchar('service', { length: 100 }), // Added: service selection for lead scoring
   teamSize: varchar('team_size', { length: 50 }),
   timeline: varchar('timeline', { length: 100 }),
-  budget: varchar('budget', { length: 100 }),
   message: text('message'),
   referral: varchar('referral', { length: 100 }),
   score: integer('score').default(0),

@@ -1,11 +1,11 @@
-// Lead scoring algorithm - extracted from the original HTML form
+// Lead scoring algorithm - aligned with frontend form values
 export interface LeadData {
   name: string
   email: string
   company?: string
-  teamSize?: string
+  service?: string  // Added: Service selection scoring
+  teamSize?: string  // Using camelCase (TypeScript convention)
   timeline?: string
-  budget?: string
   message?: string
   referral?: string
 }
@@ -18,7 +18,19 @@ export interface ScoredLead extends LeadData {
 export function calculateLeadScore(data: LeadData): number {
   let score = 0
 
-  // Team size scoring (up to 20 points)
+  // Service scoring (up to 25 points) - Added to match frontend
+  if (data.service) {
+    const serviceMap: Record<string, number> = {
+      'Profit Optimization': 25,
+      'Performance Automation': 20,
+      'Cybersecurity AI': 20,
+      'Custom AI Infrastructure': 25,
+      'Not sure yet': 5,
+    }
+    score += serviceMap[data.service] || 0
+  }
+
+  // Team size scoring (up to 25 points)
   if (data.teamSize) {
     const teamSizeMap: Record<string, number> = {
       '1-5': 10,
@@ -30,28 +42,16 @@ export function calculateLeadScore(data: LeadData): number {
     score += teamSizeMap[data.teamSize] || 0
   }
 
-  // Timeline scoring (up to 15 points)
+  // Timeline scoring (up to 25 points) - Updated to match frontend values
   if (data.timeline) {
     const timelineMap: Record<string, number> = {
-      'ASAP': 15,
-      '1-2 months': 12,
-      '3-6 months': 8,
-      '6+ months': 4,
-      'Just exploring': 2,
+      'ASAP': 25,        // Increased from 15
+      '1-2 months': 20,  // Increased from 12
+      '3-6 months': 10,  // Increased from 8
+      'Just exploring': 5, // Increased from 2
+      // Removed '6+ months' (form doesn't send this value)
     }
     score += timelineMap[data.timeline] || 0
-  }
-
-  // Budget scoring (up to 25 points)
-  if (data.budget) {
-    const budgetMap: Record<string, number> = {
-      '<$5,000': 5,
-      '$5-10,000': 12,
-      '$10-25,000': 18,
-      '$25,000-50,000': 25,
-      '$50,000+': 25,
-    }
-    score += budgetMap[data.budget] || 0
   }
 
   // Message quality (up to 15 points)

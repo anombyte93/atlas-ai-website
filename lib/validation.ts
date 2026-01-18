@@ -19,11 +19,19 @@ export const leadSubmissionSchema = z.object({
     .max(255, 'Company name must be less than 255 characters')
     .trim()
     .optional(),
+  // Service selection for lead scoring
+  service: z.enum([
+    'Profit Optimization',
+    'Performance Automation',
+    'Cybersecurity AI',
+    'Custom AI Infrastructure',
+    'Not sure yet'
+  ]).optional(),
+  // Team size - uses camelCase (TypeScript convention), form sends snake_case (team_size)
   teamSize: z.enum(['1-5', '6-20', '21-50', '51-200', '200+'])
     .optional(),
-  timeline: z.enum(['ASAP', '1-2 months', '3-6 months', '6+ months', 'Just exploring'])
-    .optional(),
-  budget: z.enum(['<$5,000', '$5-10,000', '$10-25,000', '$25,000-50,000', '$50,000+'])
+  // Timeline - updated to match frontend form values (removed '6+ months')
+  timeline: z.enum(['ASAP', '1-2 months', '3-6 months', 'Just exploring'])
     .optional(),
   message: z.string()
     .max(5000, 'Message must be less than 5000 characters')
