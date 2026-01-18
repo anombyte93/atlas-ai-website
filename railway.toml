@@ -1,0 +1,13 @@
+# Railway deployment configuration
+# See https://docs.railway.app/reference/deploy-config
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "npm run start"
+healthcheckPath = "/"
+
+[env]
+NODE_ENV = "production"

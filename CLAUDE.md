@@ -40,3 +40,12 @@ Simple, professional website for atlas-ai.au - AI business integration services
 - Date: 2024-12-31
 - By: /prompt-architect
 - Complexity: 10
+
+## Reference Pattern Learning Rule
+
+When implementing backend logic or complex components, you may consult the maryse-demo.atlas-ai.au codebase as a reference implementation to infer proven patterns, data flows, and architectural decisions.
+
+Do NOT copy code verbatim.
+Extract principles, flows, and constraints only.
+Adapt all implementations to the current Atlas AI backend, stack, and conventions.
+Document which pattern was learned and why it applies.
