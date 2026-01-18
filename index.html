@@ -409,6 +409,182 @@
             opacity: 0.85;
         }
 
+        /* RAG Demo Section */
+        .rag-demo-section {
+            background: linear-gradient(135deg, #FAF9F6 0%, #F0F4F2 100%);
+            padding: 80px 24px;
+        }
+
+        .rag-demo-container {
+            max-width: 900px;
+            margin: 40px auto 0;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--accent);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--cream);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-light);
+            background: rgba(45, 90, 74, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--accent-light);
+            background: rgba(45, 90, 74, 0.1);
+        }
+
+        .upload-icon {
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: var(--charcoal);
+        }
+
+        .upload-zone p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .upload-hint {
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+
+        .document-status {
+            margin-top: 32px;
+            padding: 20px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .status-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+
+        .status-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .status-value.ready {
+            color: var(--success);
+        }
+
+        .status-value.processing {
+            color: var(--error);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Interface */
+        .rag-chat {
+            margin-top: 24px;
+        }
+
+        .chat-messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: var(--cream);
+            border-radius: 12px;
+            min-height: 200px;
+        }
+
+        .chat-message {
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .chat-message.user {
+            background: var(--accent);
+            color: white;
+        }
+
+        .chat-message.ai {
+            background: white;
+            border-left: 4px solid var(--accent);
+        }
+
+        .chat-message .sources {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9375rem;
+        }
+
+        .chat-input button {
+            padding: 12px 24px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover:not(:disabled) {
+            background: var(--accent-light);
+        }
+
+        .chat-input button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* Process */
         .process-steps {
             display: grid;
@@ -1010,6 +1186,59 @@
         </div>
     </section>
 
+    <!-- RAG Demo Section -->
+    <section class="rag-demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="serif">See RAG in Action</h2>
+                <p>Experience how AI can understand your business documents in real-time</p>
+                <p style="margin-top: 12px; font-size: 0.875rem; opacity: 0.8;">Demo uses your browser's storage. No data leaves your device.</p>
+            </div>
+
+            <div class="rag-demo-container">
+                <!-- Upload Zone -->
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h3>Drop a document here</h3>
+                    <p>or click to select</p>
+                    <input type="file" id="fileInput" accept=".txt,.md,.pdf" style="display: none;">
+                    <div class="upload-hint">Supports: TXT, MD, PDF (max 2MB)</div>
+                </div>
+
+                <!-- Document Status -->
+                <div class="document-status" id="documentStatus" style="display: none;">
+                    <div class="status-item">
+                        <span class="status-label">Document:</span>
+                        <span class="status-value" id="docName">-</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Chunks stored:</span>
+                        <span class="status-value" id="chunkCount">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Status:</span>
+                        <span class="status-value ready" id="processStatus">Ready</span>
+                    </div>
+                </div>
+
+                <!-- Chat Interface -->
+                <div class="rag-chat" id="ragChat" style="display: none;">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="questionInput" placeholder="Ask a question about your document..." disabled>
+                        <button id="askBtn" disabled>Ask</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="process">
         <div class="container">
             <div class="section-header">
@@ -1482,6 +1711,227 @@
             // Fallback to direct link (replace with actual Cal.com URL)
             window.open('https://cal.com/atlas-ai/discovery', '_blank');
         }
+
+        // ========== RAG DEMO FUNCTIONALITY ==========
+        (function() {
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            const documentStatus = document.getElementById('documentStatus');
+            const ragChat = document.getElementById('ragChat');
+            const questionInput = document.getElementById('questionInput');
+            const askBtn = document.getElementById('askBtn');
+            const chatMessages = document.getElementById('chatMessages');
+
+            let documentChunks = [];
+            let embeddings = [];
+            let isOpenAIConfigured = false;
+
+            // OpenAI Configuration (user needs to add their API key)
+            const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY_HERE'; // TODO: Replace with secure API key management
+
+            // Drag and drop handlers
+            uploadZone.addEventListener('click', () => fileInput.click());
+
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                handleFile(e.dataTransfer.files[0]);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if(e.target.files[0]) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            async function handleFile(file) {
+                // Check file size (2MB limit)
+                if(file.size > 2 * 1024 * 1024) {
+                    alert('File too large. Please upload a file under 2MB.');
+                    return;
+                }
+
+                // Check file type
+                const validTypes = ['text/plain', 'text/markdown', 'application/pdf'];
+                if(!validTypes.includes(file.type) && !file.name.match(/\.(txt|md|pdf)$/i)) {
+                    alert('Please upload a TXT, MD, or PDF file.');
+                    return;
+                }
+
+                updateStatus('processing');
+                document.getElementById('docName').textContent = file.name;
+
+                try {
+                    let text = '';
+
+                    if (file.type === 'application/pdf') {
+                        // For PDF, we'll use a simple text extraction demo
+                        alert('PDF support coming soon! For now, please use TXT or MD files.');
+                        updateStatus('ready');
+                        return;
+                    } else {
+                        text = await file.text();
+                    }
+
+                    // Chunk the document (1000 character chunks with overlap)
+                    const chunkSize = 1000;
+                    const overlap = 200;
+                    const chunks = [];
+
+                    for (let i = 0; i <text.length; i += (chunkSize - overlap)) {
+                        const chunk = text.slice(i, i + chunkSize);
+                        chunks.push(chunk.trim());
+                    }
+
+                    documentChunks = chunks;
+                    document.getElementById('chunkCount').textContent = chunks.length;
+
+                    // Store in browser memory for demo
+                    sessionStorage.setItem('demoDocument', JSON.stringify({
+                        name: file.name,
+                        chunks: chunks,
+                        timestamp: Date.now()
+                    }));
+
+                    updateStatus('ready');
+                    showChatInterface();
+
+                } catch (error) {
+                    console.error('File processing error:', error);
+                    alert('Error processing file. Please try a different file.');
+                    updateStatus('ready');
+                }
+            }
+
+            function updateStatus(status) {
+                const statusEl = document.getElementById('processStatus');
+                statusEl.className = 'status-value ' + status;
+                statusEl.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+            }
+
+            function showChatInterface() {
+                documentStatus.style.display = 'none';
+                ragChat.style.display = 'block';
+                questionInput.disabled = false;
+                askBtn.disabled = false;
+
+                // Add welcome message
+                addMessage('ai', `I've analyzed your document (${documentChunks.length} chunks stored). Ask me anything about its content!`);
+            }
+
+            function addMessage(type, content, sources = []) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'chat-message ' + type;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.textContent = content;
+                messageDiv.appendChild(contentDiv);
+
+                if (sources.length > 0) && type === 'ai') {
+                    const sourcesDiv = document.createElement('div');
+                    sourcesDiv.className = 'sources';
+                    sourcesDiv.innerHTML = '<strong>Sources:</strong><br>' + sources.map((s, i) =>
+                        `Chunk ${s.chunk} (${Math.round(s.score * 100)}% match)`
+                    ).join('<br>');
+                    messageDiv.appendChild(sourcesDiv);
+                }
+
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Question handler
+            askBtn.addEventListener('click', handleQuestion);
+            questionInput.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') handleQuestion();
+            });
+
+            async function handleQuestion() {
+                const question = questionInput.value.trim();
+                if(!question) return;
+
+                // Show user message
+                addMessage('user', question);
+                questionInput.value = '';
+                questionInput.disabled = true;
+                askBtn.disabled = true;
+
+                try {
+                    // Simple keyword-based search for demo
+                    const questionLower = question.toLowerCase();
+
+                    // Find relevant chunks (keyword matching)
+                    const relevantChunks = documentChunks
+                        .map((chunk, index) => ({
+                            text: chunk,
+                            chunk: index + 1,
+                            score: calculateRelevance(questionLower, chunk)
+                        }))
+                        .filter(item => item.score > 0)
+                        .sort((a, b) => b.score - a.score)
+                        .slice(0, 3);
+
+                    if (relevantChunks.length === 0) {
+                        addMessage('ai', "I couldn't find relevant information in your document. Try different keywords or rephrase your question.");
+                        questionInput.disabled = false;
+                        askBtn.disabled = false;
+                        return;
+                    }
+
+                    // Build context from relevant chunks
+                    const context = relevantChunks.map(c =>
+                        `Context (Chunk ${c.chunk}): ${c.text.substring(0, 100)}...`
+                    ).join('\n\n');
+
+                    // Create AI response with the context
+                    const response = `Based on your document, here's what I found:\n\n` +
+                        relevantChunks.map(c =>
+                            `From ${c.score.toFixed(2)} match: "${c.text.substring(0, 80)}..."`
+                        ).join('\n\n');
+
+                    addMessage('ai', response.trim());
+
+                } catch (error) {
+                    console.error('Question handling error:', error);
+                    addMessage('ai', 'I encountered an error. Please refresh and try again.');
+                }
+
+                questionInput.disabled = false;
+                askBtn.disabled = false;
+                questionInput.focus();
+            }
+
+            // Calculate relevance score for demo (simple keyword matching)
+            function calculateRelevance(question, chunk) {
+                const questionWords = question.toLowerCase().split(/\s+/);
+                const chunkLower = chunk.toLowerCase();
+
+                let score = 0;
+                questionWords.forEach(word => {
+                    if (word.length < 3) return;
+                    if (chunkLower.includes(word)) score += 0.5;
+                    if (chunkLower.hasWord(word)) score += 0.3;
+                });
+
+                // Normalize by chunk length
+                return score / (chunk.length / 1000);
+            }
+
+            // String helper
+            String.prototype.hasWord = function(word) {
+                const regex = new RegExp('\\b' + word + '\\b', 'i');
+                return regex.test(this);
+            };
+        })();
     </script>
 </body>
 </html>
