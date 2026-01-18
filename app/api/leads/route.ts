@@ -6,9 +6,30 @@ import { validateLeadSubmission } from '@/lib/validation'
 import { eq, desc, and } from 'drizzle-orm'
 import { getUser } from '@/lib/supabase-server'
 import { isAdminUser } from '@/lib/admin-check'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
+
+// Initialize rate limiter (5 submissions per hour per IP)
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '1h'), // 5 submissions per hour
+  analytics: true,
+  prefix: 'atlas_ai:lead_submission',
+})
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting check (prevents spam and DoS attacks)
+    const ip = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? 'anonymous'
+    const { success } = await ratelimit.limit(ip)
+
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please try again later.' },
+        { status: 429 } // HTTP 429 Too Many Requests
+      )
+    }
+
     const body = await request.json()
 
     // Transform snake_case (from form) to camelCase (for database/API layer)
