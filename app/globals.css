@@ -3,25 +3,123 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #FAF9F6;
+  --warm-white: #FEFDFB;
+  --charcoal: #1a1a1a;
+  --muted: #666;
+  --accent: #2d5a4a;
+  --accent-light: #3d7a6a;
+  --error: #dc2626;
+  --success: #059669;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  .serif {
+    font-family: var(--font-instrument-serif), Georgia, serif;
   }
+  
+  .sans {
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-[0.9375rem] font-medium transition-all duration-200 cursor-pointer border-none no-underline;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(45, 90, 74, 0.3);
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--charcoal);
+  }
+
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.6);
+  }
+  
+  .btn-back {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid #ddd;
+  }
+
+  .btn-back:hover {
+    background: var(--cream);
+    border-color: var(--charcoal);
+    color: var(--charcoal);
+  }
+  
+  .container-custom {
+    @apply max-w-[1200px] mx-auto px-6;
+  }
+}
+
+/* Form Styles */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    @apply w-full px-4 py-3.5 border border-[#ddd] rounded-xl text-base transition-colors duration-200;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(45, 90, 74, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error {
+    border-color: var(--error);
+}
+
+.radio-option input:checked + label {
+    border-color: var(--accent);
+    background: rgba(45, 90, 74, 0.05);
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease;
 }
