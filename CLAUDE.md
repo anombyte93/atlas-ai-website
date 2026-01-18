@@ -8,12 +8,20 @@ Simple, professional website for atlas-ai.au - AI business integration services
 2. **Workflow Optimization** - Integrating AI into existing business processes
 3. **Website Development** - Full-stack web applications (proven: FleetLeaseFlow, Josh projects)
 
-## Tech Stack (Derived from FleetLeaseFlow patterns)
-- **Framework**: Static HTML/CSS/JS (no framework overhead for landing page)
-- **Styling**: Tailwind CSS (CDN for simplicity)
+## Tech Stack (Full-Stack Next.js Application)
+- **Framework**: Next.js 15 (App Router) + TypeScript
+- **Database**: PostgreSQL (local development: localhost:5432/atlas_website)
+- **ORM**: Drizzle ORM with schema-first approach
+- **Styling**: Tailwind CSS
 - **Design System**: Professional blue/teal theme matching AI/tech aesthetic
-- **Deployment**: GitHub Pages via dashboard-deployer MCP
+- **Deployment**: Railway (Dockerized deployment configured, deployment deferred)
 - **Domain**: atlas-ai.au (DNS configuration needed)
+
+### Architecture
+- **Frontend**: 10 React components in `components/landing/`
+- **Backend**: API routes in `app/api/` (leads, services, portfolio)
+- **Database**: 5 tables with indexes and constraints
+- **Admin**: Dashboard with authentication (admin check via `admin_users` table)
 
 ## Design Principles
 - Mobile-first responsive design
@@ -45,7 +53,9 @@ Simple, professional website for atlas-ai.au - AI business integration services
 
 **Perplexity MCP Server**: `~/Projects/Programs/perplexity-api-simple/`
 **Local API URL**: `http://localhost:8765`
-**Tool**: `perplexity_pro_search` (sonar-deep-research model)
+**Primary Tool**: `perplexity_deep_research` (comprehensive analysis, 2-5 min, hundreds of sources)
+**Secondary Tool**: `perplexity_pro_search` (better quality, seconds, dozens of sources)
+**Fast Tool**: `perplexity_search` with `mode: 'auto'` (quick answers)
 
 ### The "Research-First" Protocol
 
@@ -58,20 +68,17 @@ Simple, professional website for atlas-ai.au - AI business integration services
 ### Execution Pattern
 
 ```bash
-# Always start tasks with 3x parallel Perplexity research
-mcp-cli call perplexity-api-free/perplexity_pro_search '{
-  "query": "<technical-context-query>",
-  "search_type": "deep"
+# Always start tasks with 3x parallel Perplexity deep research
+mcp-cli call perplexity-api-free/perplexity_deep_research '{
+  "query": "<technical-context-query>"
 }'
 
-mcp-cli call perplexity-api-free/perplexity_pro_search '{
-  "query": "<domain-context-query>",
-  "search_type": "deep"
+mcp-cli call perplexity-api-free/perplexity_deep_research '{
+  "query": "<domain-context-query>"
 }'
 
-mcp-cli call perplexity-api-free/perplexity_pro_search '{
-  "query": "<edge-cases-query>",
-  "search_type": "deep"
+mcp-cli call perplexity-api-free/perplexity_deep_research '{
+  "query": "<edge-cases-query>"
 }'
 ```
 
@@ -101,3 +108,153 @@ Do NOT copy code verbatim.
 Extract principles, flows, and constraints only.
 Adapt all implementations to the current Atlas AI backend, stack, and conventions.
 Document which pattern was learned and why it applies.
+
+---
+
+## Database Integration Completed (2026-01-18)
+
+### Overview
+Successfully migrated from static HTML landing page to full-stack Next.js application with PostgreSQL backend, following patterns from maryse-demo.atlas-ai.au and WebApp reference implementations.
+
+### Database Schema
+
+**Tables Created** (via Drizzle ORM):
+- `leads` - Lead submissions with scoring (email unique constraint)
+- `services` - Service catalog
+- `portfolio_projects` - Portfolio items
+- `admin_users` - Admin authorization (email unique constraint)
+- `activity_logs` - Audit trail for admin actions
+
+**Key Features**:
+- Unique constraint on `leads.email` prevents duplicate submissions
+- Indexes on `leads.email`, `leads.status`, `leads.qualified` for query optimization
+- Foreign key constraint: `activity_logs.admin_id` → `admin_users.id`
+- Generated migration: `drizzle/0000_lively_gunslinger.sql`
+
+### API Routes
+
+**`app/api/leads/route.ts`**:
+- `POST /api/leads` - Lead submission with validation + scoring
+  - Field mapping: `team_size` (form) → `teamSize` (API)
+  - Zod validation before database insert
+  - Lead scoring algorithm (0-100, qualified if ≥50)
+  - Duplicate email handling (409 Conflict)
+- `GET /api/leads` - Fetch leads with optional filters (status, qualified)
+
+**`app/api/services/route.ts`**:
+- `GET /api/services` - Fetch all active services
+
+**`app/api/portfolio/route.ts`**:
+- `GET /api/portfolio` - Fetch all portfolio projects
+
+### Admin Dashboard
+
+**`app/admin/page.tsx`**:
+- Protected by `isAdminUser()` check against `admin_users` table
+- Displays recent leads, activity logs, and stats
+- Status update actions for lead management
+
+**Security**:
+- Admin authorization bypass fixed (Cycle 2 validation)
+- Email validation added (Zod `.email()` check)
+- `admin_users` table whitelist for admin access
+
+### Frontend Components
+
+**10 React Components** (`components/landing/`):
+1. `navigation.tsx` - Header with mobile menu
+2. `hero.tsx` - Hero section with CTA
+3. `mcp-comparison.tsx` - Feature comparison table
+4. `services.tsx` - Service offerings
+5. `testimonial.tsx` - Social proof
+6. `technical.tsx` - Technical capabilities
+7. `process.tsx` - How-it-works section
+8. `pricing.tsx` - Pricing cards
+9. `contact-form.tsx` - Multi-step lead form
+10. `footer.tsx` - Site footer
+
+### Critical Bug Fixes (Validation Cycles)
+
+**Field Name Mismatch** (Karen Cycle 3):
+- Form sent `team_size` (snake_case)
+- API expected `teamSize` (camelCase)
+- Fixed: Added transformation in API route
+
+**Enum Value Mismatches** (Karen Cycle 3):
+- Form: `'1-5'`, `'6-20'`, `'21-50'`, `'51-200'`, `'200+'`
+- Schema expected: `'1-10'`, `'11-50'`, `'51-200'`, `'200+'`
+- Fixed: Updated Zod schema and lead-scoring maps
+
+### Validation Results
+
+**Karen Validator Cycle 4**: Score 7.7/10
+- Verdict: **PASS WITH WARNINGS** - Deployment ready
+- Build passes: ✅ No TypeScript errors
+- Form submissions: ✅ Will succeed (field mapping + enum alignment)
+- Warnings:
+  - Missing `budget` field in form (business critical)
+  - `service` field sent but ignored by API
+
+### Database Setup
+
+**Local Development**:
+- Database: `postgresql://postgres@localhost:5432/atlas_website`
+- Migrations applied: ✅ 5 tables created
+- Admin user seeded: `admin@atlas-ai.au`
+- Test lead present: 1 entry from testing
+
+**Railway Project**:
+- Project ID: `6f63c955-c799-40b4-8a9f-117971dc8654`
+- Status: Created and linked (deployment deferred)
+- Service: `atlas-web` (Docker build configured)
+- PostgreSQL: 3 services available (`atlas-postgres`, `Postgres`, `Postgres-c_n5`)
+- DATABASE_URL: `${atlas-postgres.DATABASE_URL}` (service binding)
+
+### Configuration Files
+
+- `drizzle.config.ts` - Drizzle ORM configuration
+- `src/db/schema.ts` - Database table definitions
+- `src/db/index.ts` - Database connection singleton
+- `lib/validation.ts` - Zod validation schemas
+- `lib/lead-scoring.ts` - Lead qualification algorithm
+- `lib/admin-check.ts` - Admin authorization check
+- `railway.toml` - Railway deployment config
+- `Dockerfile` - Multi-stage Docker build (standalone output)
+- `next.config.js` - Next.js with standalone output
+- `.env` - DATABASE_URL for Drizzle Kit
+
+### Deployment Prerequisites
+
+**To complete Railway deployment**:
+1. Remove `app/login.disabled/` directory (breaks build without Supabase env vars)
+2. Run `railway up --service atlas-web`
+3. Set environment variables:
+   - `DATABASE_URL=${atlas-postgres.DATABASE_URL}`
+   - `NODE_ENV=production`
+4. Run migrations: `npm run db:migrate` (or push schema)
+5. Seed admin user: Insert into `admin_users` table
+
+### Git Commits
+
+1. `d7caa7c` - feat: Frontend migration - Complete landing page (10 components)
+2. `5dac150` - fix: Security fixes (admin auth, validation, unique constraint)
+3. `e08e537` - feat: Add blog section with 3 technical articles
+4. `87a1a0a` - feat: Add Live RAG Demo section with client-side document processing
+5. `843abc6` - fix: Critical bug fixes (field mapping + enum alignment)
+6. `d7caa7c` - feat: Frontend migration - Complete landing page with React components
+
+### Patterns Learned from maryse-demo
+
+1. **Lazy Database Connection** - Defers connection until runtime to prevent build failures
+2. **Field Mapping Layer** - API route transforms snake_case → camelCase
+3. **Separation of Auth/AuthZ** - Supabase handles auth, `admin_users` table handles authorization
+4. **Enum-First Development** - Define enums in schema, match across form + validation + scoring
+5. **Migration-First Workflow** - Generate migrations, apply, then seed data
+
+### Post-Deployment Improvements
+
+1. **Add budget field** to contact form (currently missing, business critical)
+2. **Utilize service field** or remove from form (currently ignored)
+3. **Set up Supabase Auth** for full authentication flow
+4. **Configure custom domain** in Railway dashboard
+5. **Set up monitoring** (Railway logs + health checks)

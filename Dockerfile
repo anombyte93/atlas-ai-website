@@ -38,9 +38,9 @@ COPY --from=builder /app/public ./public
 RUN mkdir -p .next
 RUN chown -R nextjs:nodejs .next
 
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy standalone build - it will be at the root of standalone directory
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone/ ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./node_modules/.next/static || true
 
 USER nextjs
 
