@@ -1,4 +1,8 @@
 import { redirect } from 'next/navigation'
+
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = 'force-dynamic'
+
 import { getUser, isSupabaseConfigured } from '@/lib/supabase-server'
 import { isAdminUser } from '@/lib/admin-check'
 import { db } from '@/src/db'
