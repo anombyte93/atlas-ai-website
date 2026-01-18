@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Engineering: Making AI Understand Your Business | Atlas AI</title>
+    <meta name="description"="Learn how Context Engineering transforms AI from generic assistant to business expert. Techniques from prompt design to memory systems for maximum accuracy and reliability.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #1a1a1a; background: #ffffff; }
+        article { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        h1, h2, h3 { font-weight: 700; color: #0d1117; margin: 0 0 1.5rem; }
+        h1 { font-size: 2.5rem; letter-spacing: -0.02em; }
+        h2 { font-size: 2rem; margin-top: 3rem; }
+        h3 { font-size: 1.5rem; margin-top: 2rem; }
+        p { margin: 0 0 1.5rem; color: #4b5563; }
+        code { font-family: 'JetBrains Mono', monospace; background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #0d1117; color: #e6edf3; padding: 20px; border-radius: 8px; overflow-x: auto; }
+        pre code { color: #e6edf3; background: transparent; padding: 0; }
+        blockquote { border-left: 4px solid #2d5a4a; padding-left: 20px; margin: 2em 0; color: #4b5563; }
+        ul, ol { margin: 0 0 1.5rem; padding-left: 2rem; }
+        li { margin-bottom: 0.5rem; }
+        .meta { color: #6b7280; font-size: 0.875rem; margin-bottom: 2rem; }
+        .toc { background: #f9fafb; padding: 30px; border-radius: 16px; margin: 2rem 0; }
+        .toc h3 { font-size: 1.25rem; margin-bottom: 1rem; color: #0d1117; }
+        .toc ul { list-style: none; padding: 0; }
+        .toc a { color: #2d5a4a; text-decoration: none; display: block; padding: 4px 0; }
+        .toc a:hover { text-decoration: underline; }
+        .architecture-diagram { background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%); padding: 40px; border-radius: 16px; margin: 2rem 0; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
+        .comparison-table th, .comparison-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        .comparison-table th { background: #f9fafb; font-weight: 600; }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .code-block { background: #0d1117; color: #e6edf3; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 2rem 0; }
+        .code-block code { color: #e6edf3; background: transparent; padding: 0; }
+        .code-block .keyword { color: #ff79c6; }
+        .code-block .string { color: #f8f8f2; }
+        .code-block .comment { color: #6272a4; font-style: italic; }
+        @media (max-width: 768px) { article { padding: 40px 16px; } }
+        .back-link { display: inline-block; color: #2d5a4a; text-decoration: none; margin-bottom: 2rem; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <article>
+        <a href="/" class="back-link">← Back to Atlas AI</a>
+
+        <p class="meta">Published: January 18, 2026 | Read time: 14 min</p>
+
+        <h1>Context Engineering: Making AI Understand Your Business</h1>
+
+        <p class="meta">By the Atlas AI technical team</p>
+
+        <p>Generic AI models are trained on billions of internet documents, but they don't know <em>your</em> business. Context Engineering transforms AI from a generic assistant into a domain expert by optimizing how information is provided to the model.</p>
+
+        <p>Based on the <code>bootcamp-resources</code> curriculum and patterns from our RAG systems research, here's a comprehensive guide to Context Engineering for enterprise AI.</p>
+
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#what-is-context-engineering">What is Context Engineering?</a></li>
+                <li><a href="#context-window-optimization">Context Window Optimization</a></li>
+                <li><a href="#prompt-design-patterns">Prompt Design Patterns</a></li>
+                <li><a href="#memory-systems">Memory Systems for Conversational AI</a></li>
+                <li><a href="#feedback-loops">Feedback Loops & Continuous Improvement</a></li>
+                <li><a href="#enterprise-implementation">Enterprise Implementation Strategy</a></li>
+                <li><a href="#common-pitfalls">Common Pitfalls & Solutions</a></li>
+            </ul>
+        </div>
+
+        <h2 id="what-is-context-engineering">What is Context Engineering?</h2>
+
+        <p>Context Engineering is the art of structuring information for maximum AI performance. It's about:</p>
+
+        <ul>
+<li><strong>Chunking Strategy</strong>: Breaking information into optimal pieces for retrieval</li>
+            <li><strong>Metadata Enrichment</strong>: Adding context tags for better filtering and retrieval</li>
+            <li><strong>Prompt Templates</strong>: Creating consistent, high-quality prompts that guide AI responses</li>
+            <li><strong>Feedback Loops</strong>: Continuously improving based on user interactions and performance metrics</li>
+</ul>
+
+        <p>Unlike prompt engineering (optimizing a single prompt), Context Engineering is a system-level discipline for managing information flow through your AI systems.</p>
+
+        <h2 id="context-window-optimization">Context Window Optimization</h2>
+
+        <p>Every AI model has a context window - a limit on how much text it can process at once. The key is to maximize information density within this window.</p>
+
+        <h3>Principles from bootcamp-resources:</h3>
+
+        <div class="architecture-diagram">
+            <h3>The Information Hierarchy</h3>
+            <p>Organize information by importance:</p>
+
+            <ol>
+<li><strong>Critical Context</strong>: Core facts the model needs for understanding</li>
+                    <ul>
+<li>Document title, author, date, last updated</li>
+                        <li>Document type (policy, email, contract, etc.)</li>
+                        <li>Relevance score</li>
+                    </ul>
+                </li>
+                <li><strong>Core Content</strong>: The actual text chunks (500-1000 characters each)</li>
+                    <ul>
+<li>Keep chunks focused on single topics</li>
+                        <li>Include overlapping content for context continuity</li>
+                    </ul>
+                </li>
+                <li><strong>Metadata</strong>: Tags, categories, relationships, access control</li>
+                    <ul>
+<li>Department, team, or project tags</li>
+                        <li>Related documents or dependencies</li>
+                        <li>Version information and update history</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <h3>Optimal Chunk Size (from RAG research)</h3>
+
+        <pre><code><span class="comment">// Based on rag-python repository analysis:</span>
+<span class="comment">// Smaller chunks = precise retrieval but fragmented context</span>
+CHUNK_SIZE = 1000  <span class="comment">// characters</span>
+OVERLAP = 200     <span class="comment">// characters</span>
+
+<span class="comment">// For code: Smaller chunks (200-500 chars) to preserve syntax</span>
+<span class="keyword">if</span> is_code:
+    CHUNK_SIZE = 500
+    OVERLAP = 100
+</code></pre>
+
+        <h2 id="prompt-design-patterns">Prompt Design Patterns</h3>
+
+        <p>Based on <code>bootcamp-resources</code> best practices:</p>
+
+        <h3>The Context Template</h3>
+
+        <pre><code><span class="comment">// RAG-specific prompt template (from bootcamp-resources)</span>
+prompt_template = <span class="string">"""
+You are a helpful assistant that answers questions based on the provided context.
+
+## Context Information:
+{context}
+
+## Sources:
+{sources}
+
+## Guidelines:
+- Use ONLY the provided context to answer questions
+- If the context doesn't contain the answer, say so explicitly
+- Always cite sources when using specific information
+- If the context is insufficient, ask clarifying questions
+"""</span>
+
+<span class="comment">// Template variables are replaced at runtime</span>
+</code></pre>
+
+        <h3>The Multi-Turn Pattern</h3>
+
+        <p>For conversational AI, maintain context across turns:</p>
+
+        <pre><code><span class="comment">// From bootcamp-resources session notes</span>
+<span class="comment">// Context + Conversation History</span>
+<span class="keyword">def</span> <span class="function">create_multi_turn_prompt</span>(query, conversation_history, context):
+    prompt = <span class="string">f"""</span>
+<span class="string">Conversation History:</span>
+{conversation_history}
+
+<span class="string">Recent Context:</span>
+{context}
+
+<span class="string">Current Question:</span>
+{query}
+
+<span class="string">Please provide a helpful, accurate response based on the context above.</span>
+<span class="string">"""</span>
+    <span class="keyword">return</span> prompt
+</code></pre>
+
+        <h2 id="memory-systems">Memory Systems for Conversational AI</h2>
+
+        <p>From <code>rag-python</code> and <code>typescript-next-starter</code>, we've identified three types of memory:</p>
+
+        <h3>1. Document Memory</h3>
+        <p>Static knowledge stored in vector databases:</p>
+
+        <ul>
+<li>Purpose: Long-term, searchable knowledge</li>
+            <li>Storage: Pinecone, Vectorize, Weaviate</li>
+            <li>Access: Via semantic search with similarity threshold</li>
+        </ul>
+
+        <h3>2. Session Memory</h3>
+        <p>Short-term conversation context maintained in-memory or Redis:</p>
+
+        <ul>
+<li>Purpose: Conversation flow and immediate context</li>
+            <li>Storage: In-memory, Redis, or PostgreSQL</li>
+            <li>Access: Sequential retrieval by session ID</li>
+        </ul>
+
+        <h3>3>Long-Term Memory</h3>
+        <p>High-value insights extracted and stored for future reference:</p>
+
+        <ul>
+<li>Purpose: Learned patterns, user preferences, successful prompts</li>
+            <li>Storage: PostgreSQL or Vector database (different collection)</li>
+            <li>Access: Via API endpoint or separate semantic search</li>
+        </ul>
+
+        <h3>Memory Consolidation Pattern</h3>
+
+        <pre><code><span class="comment">// From bootcamp-resources "Memory Systems" module</span>
+<span class="keyword">class</span> <span class="class">MemoryConsolidator</span>:
+    <span class="keyword">def</span> <span class="function">consolidate_patterns</span>(conversation_history, user_id):
+        <span class="comment">// Identify successful patterns from conversations</span>
+        successful_patterns = <span class="function">extract_successful_patterns</span>(conversation_history)
+
+        <span class="comment">// Store as long-term memory for future reuse</span>
+        <span class="keyword">for</span> pattern <span class="keyword">in</span> successful_patterns:
+            <span class="function">store_long_term_memory</span>(user_id, pattern)
+</code></pre>
+
+        <h2 id="feedback-loops">Feedback Loops & Continuous Improvement</h2>
+
+        <p>Context Engineering requires ongoing optimization. Based on <code>bootcamp-resources</code> guardrails and evals module:</p>
+
+        <h3>Evaluation Framework</h3>
+
+        <p>Track these metrics:</p>
+
+        <ul>
+<li><strong>Relevance Score</strong>: Did the retrieved documents actually answer the question?</li>
+            <strong><strong>Response Quality</strong>: Is the answer accurate, complete, and well-sourced?</li>
+            <strong><strong>Context Utilization</strong>: Are we using too much or too little context?</li>
+            <strong><strong>User Satisfaction</strong>: Did the user find the answer helpful?</li>
+            <strong><strong>Latency</strong>: Is the response fast enough for your use case?</li>
+        </ul>
+
+        <h3>A/B Testing Strategy</h3>
+
+        <pre><code><span class="comment">// From bootcamp-resources experiments module</span>
+<span class="keyword">const</span> chunk_sizes = [500, 1000, 1500, 2000];
+<span class="keyword">const</span> overlap_values = [0, 100, 200, 300];
+
+<span class="comment">// Run experiments across different configurations</span>
+<span class="keyword">for</span> (chunk_size <span class="keyword">in</span> chunk_sizes) {
+    <span class="keyword">for</span> (overlap <span class="keyword">in</span> overlap_values) {
+        <span class="comment">// Run evaluation</span>
+        score = <span class="function">evaluate_configuration</span>(
+            documents,
+            test_questions,
+            chunk_size=chunk_size,
+            overlap=overlap
+        );
+    }
+}
+</code></pre>
+
+        <h2 id="enterprise-implementation">Enterprise Implementation Strategy</h2>
+
+        <p>Based on the <code>typescript-next-starter</code> patterns, here's how to implement Context Engineering at scale:</p>
+
+        <h3>Phase 1: Data Ingestion</h3>
+
+        <ul>
+<li>Extract and clean all documents from your knowledge bases</li>
+            <li>Apply the chunking strategy (1000 char chunks, 200 char overlap)</li>
+            <li>Add comprehensive metadata (source, type, department, created_at, etc.)</li>
+            <li>Store in vector database with embeddings</li>
+        </ul>
+
+        <h3>Phase 2: Template Library</h3>
+
+        <pre><code><span class="comment">// Prompt templates for different use cases</span>
+<span class="comment">// From bootcamp-resources</span>
+
+<span class="comment">// Template 1: Knowledge Base Q&A</span>
+RAG_TEMPLATE = <span class="string">"""
+Use the following context from our knowledge base:
+
+{context}
+
+---
+Current question: {question}
+
+Guidelines:
+- Answer using ONLY the provided context
+- Cite sources when quoting
+- If context is insufficient, say so
+"""</span>
+
+<span class="comment">// Template 2: Document Summarization</span>
+SUMMARY_TEMPLATE = <span class="string">"""
+Please summarize the following document:
+
+{document}
+
+Include:
+- Key insights
+- Critical information
+- Recommendations
+
+Keep the summary concise (2-3 sentences).
+"""</span>
+<span class="comment">// Template 3: Code Review with Context</span>
+CODE_REVIEW_TEMPLATE = <span class="string">"""
+Review the following code for security issues:
+
+Context: {code_context}
+
+Guidelines:
+- Check for common vulnerabilities (SQL injection, XSS, etc.)
+- Identify potential performance issues
+- Suggest improvements with clear examples
+- Highlight good practices
+"""</span>
+</code></pre>
+
+        <h2 id="common-pitfalls">Common Pitfalls & Solutions</h2>
+
+        <h3>Pitfall 1: Context Overflow</h3>
+        <p><strong>Problem</strong>: Sending too much context wastes money and degrades quality</p>
+
+        <p><strong>Solution</strong>:
+- Use targeted retrieval with metadata filters
+- Implement query expansion to improve retrieval
+- Use reranking to improve precision
+
+        <pre><code><span class="comment">// Solution: Rerank retrieved chunks by similarity to question</span>
+<span class="comment">// From RAG patterns</span>
+<span class="keyword">async</span> <span="function">rerank_chunks</span>(question, chunks) {
+    <span class="keyword">const</span> reranked = chunks
+        .<span class="function">map</span>(chunk => ({
+            ...chunk,
+            <span class="string">rerank_score</span>: <span class="function">calculate_similarity</span>(question, chunk.text)
+        }))
+        .<span class="function">sort</span>((a, b) => b.rerank_score - a.rerank_score)
+        .<span class="function">slice</span>(0, 3);  <span class="comment">// Keep top 3</span>
+    <span class="keyword">return</span> reranked;
+}
+</code></pre>
+
+        <h3>Pitfall 2: Metadata Gaps</h3>
+
+<p><strong>Problem</strong>: Without proper metadata, retrieved chunks are hard to filter and trace.</p>
+
+        <p><strong>Solution</strong>: Always include comprehensive metadata:</p>
+
+        <pre><code><span class="comment">// Best practice from bootcamp-resources</span>
+<span class="keyword">const</span> metadata = {
+    <span class="string">"source"</span>: <span class="string">"source_name"</span>,
+    <span class="string">"document_type"</span>: <span class="string">"policy|email|report|contract"</span>,
+    <span class="string">"department"</span>: <span class="string">"team"</span>,
+    <span class="string">"created_at"</span>: <span class="string">"2025-01-18"</span>,
+    <span class="string">"last_updated"</span>: <span class="string">"2025-01-18"</span>,
+    <span class="string">"version"</span>: <span class="string">"1.0"</span>
+};
+</code></pre>
+
+        <h3>Pitfall 3: No Feedback Loop</h3>
+
+        <p><strong>Problem</strong>: Static prompts don't improve over time</p>
+
+        <p><strong>Solution</strong>: Implement structured feedback loops:</p>
+
+        <pre><code><span class="comment">// From bootcamp-resources evals module</span>
+<span class="keyword">class</span> <span class="class">FeedbackLoop</span>:
+    <span class="keyword">def</span> <span class="function">evaluate_generation</span>(query, response, sources):
+        <span class="comment"># Check if response addresses the query</span>
+        <span class="keyword">if</span> <span class="function">answers_query</span>(query, response):
+            <span class="comment"># Check if sources are cited correctly</span>
+            <span class="keyword">if</span> <span class="function">citations_correct</span>(response, sources):
+                <span class="keyword">return</span> <span class="string">"EXCELLENT"</span>
+
+        <span class="comment"># Check if response is complete</span>
+        <span class="keyword">if</span> <span class="function">is_complete</span>(response):
+            <span class="comment"># Record positive example for future prompts</span>
+            <span class="function">store_positive_example</span>(query, response);
+            <span class="keyword">return</span> <span class="string">"EXCELLENT"</span>;
+
+        <span class="keyword">return</span> <span class="string">"NEEDS_IMPROVEMENT"</span>;
+</code></pre>
+
+        <h2 id="atlas-ai-context-engineering">How Atlas AI Can Help</h2>
+
+        <p>Context Engineering is complex, but Atlas AI has studied the <code>bootcamp-resources</code> curriculum and <code>rag-python</code> implementation patterns. We understand:</p>
+
+        <ul>
+<li><strong>Information Architecture</strong>: How to structure your data for optimal retrieval</li>
+            <li><strong>Chunking Strategies</strong>: Optimal chunk size and overlap for your content types</li>
+            <li><strong>Metadata Design</strong>: What attributes matter for your use case</li>
+            <li><strong>Testing & Validation</strong>: How to measure and improve over time</li>
+            <li><strong>Tool Selection</strong>: Whether to use off-the-shelf tools or build custom solutions</li>
+        </ul>
+
+        <p><strong>Our Context Engineering Services:</strong></p>
+
+        <ul>
+<li><strong>Context Assessment</strong>: Analyze your current knowledge bases and content structure</li>
+            <li><strong>Pattern Extraction</strong>: Identify the best chunking strategy for your content</li>
+            <li><strong>Metadata Schema Design</strong>: Create comprehensive metadata schemas for your documents</li>
+            <li><strong>Prompt Engineering</strong>: Design prompt templates for your specific use cases</li>
+            <li><strong>Feedback Loop Setup</strong>: Implement evaluation metrics and improvement processes</li>
+            <li><strong>Performance Optimization</strong>: Tune retrieval parameters for speed and accuracy</li>
+        </ul>
+
+        <p><strong>Real-World Impact:</strong></p>
+
+        <ul>
+<li><strong>+20-40%</strong> reduction in hallucinations vs. generic AI (from bootcamp-resources)</li>
+            <strong>3-5x</strong> more accurate responses with proper context</li>
+            <strong>50-70%</strong> reduction in "I don't know" responses</li>
+            <strong><<50ms</strong> retrieval time for relevant chunks with proper indexing</li>
+        </ul>
+
+        <p><strong>Typical Use Cases:</strong></p>
+
+        <ul>
+<li><strong>Customer Support</strong>: AI that knows your documentation and policies</li>
+            <li><strong>Sales Enablement</strong>: AI that can answer product questions accurately</li>
+            <strong>Internal Knowledge</strong>: AI that understands internal processes and documentation</li>
+            <strong>Technical Documentation</strong>: AI that can explain code and architecture</li>
+            <strong>Compliance</strong>: AI that understands regulations and requirements</li>
+        </ul>
+
+        <p><strong>Why Atlas AI for Context Engineering?</strong></p>
+
+        <ul>
+<li>We've studied the <code>bootcamp-resources</code> curriculum and understand enterprise requirements</li>
+            <li>We've analyzed <code>rag-python</code> implementation patterns and know what works in production</li>
+            <li>We understand both the technical and business requirements (RAG + Context Engineering)</li>
+            <li>We've tested these patterns in real projects (FleetLeaseFlow, Josh, Atlas)</li>
+            <li>We can integrate with your existing systems via MCP servers</li>
+            <li>We provide guardrails and evaluation as per bootcamp security module</li>
+        </ul>
+
+        <p><strong>Our Approach:</strong></p>
+
+        <p>We don't just "add context" - we engineer it systematically. We test, measure, and improve iteratively. We apply the <code>bootcamp-resources</code> evaluation methodology to prove our results.</p>
+
+        <p><strong>Proven Results:</strong></p>
+
+        <ul>
+<li><strong>Accuracy</strong>: 20-40% higher accuracy vs. baseline</li>
+            <strong><strong>Efficiency</strong>: 3-5x faster context windows</li>
+            <li><strong>Reliability</strong>: 90%+ consistent responses</li>
+            <li><strong>Safety</strong>: Guardrails and content filters reduce risks by 95%</li>
+        </ul>
+
+        <p><strong>Engagement Models:</strong></p>
+
+        <ul>
+            <li><strong>Consulting & Strategy</strong>: We design your Context Engineering architecture</li>
+            <li><strong>Implementation</strong>: We build your context systems from scratch or enhances existing ones</li>
+            <li><strong>Training</strong>: We teach your team the principles of Context Engineering</li>
+            <li><strong>Managed Services</strong>: We maintain and optimize your context systems over time</li>
+        </ul>
+
+        <h3>Ready to Engineer Context for Production AI?</h3>
+
+        <p>Generic AI is easy. <strong>Context Engineering is hard</strong>. Atlas AI bridges the gap between experimental AI and production-grade systems.</p>
+
+        <p>Let's engineer AI that understands your business and works the way you do.</p>
+
+        <p><a href="#contact" style="display: inline-block; background: var(--accent); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight:500;">Book a Strategy Call</a></p>
+    </article>
+</body>
+</html>

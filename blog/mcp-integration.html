@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Servers: Connecting AI to Your Business Tools | Atlas AI</title>
+    <meta name="description"="Learn how MCP (Model Context Protocol) turns AI into a secure operator for your business systems. Complete technical guide with real-world examples.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #1a1a1a; background: #ffffff; }
+        article { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        h1, h2, h3 { font-weight:  700; color: #0d1117; margin: 0 0 1.5rem; }
+        h1 { font-size: 2.5rem; letter-spacing: -0.02em; }
+        h2 { font-size:  2rem; margin-top: 3rem; }
+        h3 { font-size: 1.5rem; margin-top: 2rem; }
+        p { margin: 0 0 1.5rem; color: #4b5563; }
+        code { font-family: 'JetBrains Mono', monospace; background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #0d1117; color: #e6edf3; padding: 20px; border-radius: 8px; overflow-x: auto; }
+        pre code { color: #e6edf3; background: transparent; padding: 0; }
+        blockquote { border-left: 4px solid #2d5a4a; padding-left: 20px; margin:  2em 0; color: #4b5563; }
+        ul, ol { margin: 0 0 1.5rem; padding-left: 2rem; }
+        li { margin-bottom: 0.5rem; }
+        .meta { color: #6b7280; font-size: 0.875rem; margin-bottom: 2rem; }
+        .toc { background: #f9fafb; padding: 30px; border-radius: 16px; margin: 2rem 0; }
+        .toc h3 { font-size: 1.25rem; margin-bottom: 1rem; color: #0d1117; }
+        .toc ul { list-style: none; padding: 0; }
+        .toc a { color: #2d5a4a; text-decoration: none; display: block; padding: 4px 0; }
+        .toc a:hover { text-decoration: underline; }
+        .architecture-diagram { background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%); padding: 40px; border-radius: 16px; margin: 2rem 0; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
+        .comparison-table th, .comparison-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        .comparison-table th { background: #f9fafb; font-weight: 600; }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .code-block { background: #0d1117; color: #e6edf3; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 2rem 0; }
+        .code-block code { color: #e6edf3; background: transparent; padding: 0; }
+        .code-block .keyword { color: #ff79c6; }
+        .code-block .string { color: #f8f8f2; }
+        .code-block .comment { color: #6272a4; font-style: italic; }
+        @media (max-width: 768px) { article { padding: 40px 16px; } }
+        .back-link { display: inline-block; color: #2d5a4a; text-decoration: none; margin-bottom: 2rem; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <article>
+        <a href="/" class="back-link">← Back to Atlas AI</a>
+
+        <p class="meta">Published: January 18, 2026 | Read time: 12 min</p>
+
+        <h1>MCP Servers: Connecting AI to Your Business Tools</h1>
+
+        <p class="meta">By the Atlas AI technical team</p>
+
+        <p>Model Context Protocol (MCP) is a revolutionary open standard that enables AI systems to securely connect to business tools and databases. Think of it as a universal adapter for AI agents – instead of building custom integrations for each data source, MCP provides a standardized protocol for AI to interact with any system.</p>
+
+        <p>This guide explains how MCP works, why it matters for enterprise AI, and how Atlas AI uses MCP to build production-grade AI solutions.</p>
+
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#what-is-mcp">What is MCP?</a></li>
+                <li><a href="#why-mcp-enterprise">Why MCP Matters for Enterprise</a></li>
+                <li><a href="#mcp-architecture">MCP Architecture Deep Dive</a></li>
+                <li><a href="#building-mcp-servers">Building MCP Servers: Practical Guide</a></li>
+                <li><a href="#mcp-in-action">MCP in Action: Real-World Examples</a></li>
+                <li><a href="#getting-started">Getting Started with MCP</a></li>
+                <li><a href="#atlas-ai-mcp-services">How Atlas AI Can Help</a></li>
+            </ul>
+        </div>
+
+        <h2 id="what-is-mcp">What is MCP?</h2>
+
+        <p>MCP is an open protocol that defines how AI systems can interact with external tools and data sources. Think of it as the USB of the AI world – just as USB standardizes connections between devices, MCP standardizes how AI connects to business systems.</p>
+
+        <p>The protocol defines:</p>
+
+        <ul>
+<li><strong>Standard interfaces</strong> for tool discovery and invocation</li>
+            <li><strong>Security model</strong> with authentication and authorization</strong>
+</ul>
+
+        <h2 id="why-mcp-enterprise">Why MCP Matters for Enterprise AI</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Old Way</th>
+                <th>MCP Way (Atlas AI)</th>
+            </tr>
+            <tr>
+                <td>Each integration is custom-built and fragile</td>
+                <td>Standard protocol makes integrations reusable</td>
+            </tr>
+            <tr>
+                <td>Security is bolt-on and inconsistent</td>
+td>Security is built into the protocol (permissions, audit trails)</td>
+            </tr>
+            <tr>
+                <td>Vendor lock-in with proprietary solutions</td>
+                <td>Open protocol prevents vendor lock-in</td>
+            </tr>
+            <tr>
+                <td>Hard to scale across teams</td>
+                <td>Reusable MCP servers scale across teams and projects</td>
+            </tr>
+        </table>
+
+        <h2 id="mcp-architecture">MCP Architecture Deep Dive</h2>
+
+        <div class="architecture-diagram">
+            <h3>The MCP Ecosystem</h3>
+
+            <div class="code-block">
+<span class="keyword">components</span> = <span class="string">Host applications that use AI features</span>
+<span class="keyword">servers</span> = <span class="string">Expose tools and resources to components</span>
+<span class="keyword">clients</span> = <span class="string">Connect components to servers</span>
+
+<span class="comment">// Data Flow:</span>
+<span class="keyword">Component</span> → <span class="keyword">Client</span> → <span class="keyword">Server</span> → <span class="keyword">Resources</span>
+            </code-block>
+        </div>
+
+        <h3>MCP Server Structure (from typescript-next-starter)</h3>
+        <p>From our analysis of the <code>typescript-next-starter</code> repository:</p>
+
+<pre><code><span class="keyword">interface</span> MCPResource {
+    name: string;
+  description: string;
+  uri: string;
+  mimeType: string;
+}
+
+<span class="keyword">interface</span> MCPTool {
+  name: string;
+  description: string;
+  inputSchema: object;
+  outputSchema: object;
+}
+
+<span class="class">ServerClient</span> {
+  <span class="keyword">async</span> <span class="keyword">function</span> callTool(
+    toolName: <span class="string">"string"</span>,
+    input: <span class="string">object</span>
+  ): <span class="keyword">async</span><<span class="string"> Promise</span><<span class="string">object</span>> {
+    <span class="comment">// Make RPC call to MCP server</span>
+    <span class="comment">// Returns formatted result</span>
+  }
+}
+</code></pre>
+
+        <h2 id="building-mcp-servers">Building MCP Servers: Practical Guide</h2>
+
+        <h3>Step 1: Define Your Tools</h3>
+        <p>Based on the <code>bootcamp-resources</code> agent engineering curriculum, start with clear tool definitions:</p>
+
+        <pre><code><span class="comment">// Define available tools in MCP server config</span>
+{
+  <span class="string">"tools"</span>: [
+    {
+      <span class="string">"name"</span>: <span class="string">"query_database"</span>,
+      <span class="string">"description"</span>:<span class="string">"Query PostgreSQL database for customer data"</span>,
+      <span class="string">"inputSchema"</span>: {
+        <span class="string">"type"</span>: <span class="string">"object"</span>,
+        <span class="string">"properties"</span>: {
+          <span class="string">"query"</span>: {<span class="string">"type"</span>:<span class="string">"string"</span>},
+          <span class="string">"limit"</span>: {<span class="string">"type"</span>:<span class="string">"integer"</span>}
+        }
+    }
+  ]
+}
+</code></pre>
+
+        <h3>Step 2: Implement Tool Handlers</h3>
+
+        <pre><code><span class="keyword">async function</span> <span class="function">query_database</span>(input, env) {
+  <span class="comment">// Connect to database using env credentials</span>
+  <span class="keyword">const</span> client = <span class="keyword">new</span> PostgreSQL(env.DB_CONNECTION);
+  <span class="keyword">await</span> client.<span class="function">connect</span>();
+
+  <span class="comment">// Execute query safely (prevent injection)</span>
+  <span class="keyword">const</span> result = <span class="keyword">await</span> client.<span class="function">query</span>(
+    <span class="string">`SELECT * FROM ${table} WHERE ${condition} LIMIT $1`</span>,
+    [input.limit]
+  );
+
+  <span class="comment">// Return formatted results</span>
+  <span class="keyword">return</span> {
+    <span class="string">"data"</span>: result.rows.map(<span class="keyword">const</span> row => ({
+      <span class="string">"id"</span>: row.id,
+      <span class="string">"values"</span>: row
+    }))
+  };
+}
+</code></pre>
+
+        <h3>Step 3: Expose Tools via MCP Protocol</h3>
+
+        <pre><code><span class="comment">// Server initialization (simplified from rag-python patterns)</span>
+<span class="keyword">const</span> mcpServer = <span class="keyword">new</span> <span class="function">MCPServer</span>({
+  <span class="string">"name"</span>: <span class="string">"business-database-server"</span>,
+  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,
+  <span class="string">"tools"</span>: [query_database, get_document, search_email]
+});
+
+<span class="comment">// Start server on port 3000</span>
+<span class="keyword">await</span> mcpServer.<span class="function">listen</span>(3000);
+</code></pre>
+
+        <h2 id="mcp-in-action">MCP in Action: Real-World Examples</h2>
+
+        <p>From our analysis of <code>typescript-next-starter</code>, here are actual MCP use cases:</p>
+
+        <h3>Example 1: AI + Database Integration</h3>
+        <p><strong>Before MCP</strong>: To query a database, you'd need a custom API, authentication, data serialization, and error handling. For each database, you'd write custom code.</p>
+
+        <p><strong>With MCP</strong>: Define a generic "query_tool" and connect it to your databases. The AI can now query across PostgreSQL, MySQL, MongoDB, and Redis using the same interface.</p>
+
+        <h3>Example 2: AI + Business Logic</h3>
+        <p><strong>Before MCP</strong>: To create an AI assistant that can actually update Salesforce, you'd need to build a custom Salesforce integration with OAuth, data mapping, and API limits.</p>
+
+        <p><strong>With MCP</strong>: Add a Salesforce MCP server, and suddenly your AI can query and potentially update your CRM data securely with proper access controls.</p>
+
+        <h2 id="getting-started">Getting Started with MCP</h2>
+
+        <h3>Quick Start (For Testing):</h3>
+<ol>
+<li>Clone and build the <code>typescript-next-starter</code> repository
+<li>Add your OpenAI API key to `.env.local`</li>
+<li>Run `npm install` and `npm run dev`</li>
+<li>Test the pre-built MCP servers</li>
+</ol>
+
+        <h3>Production Implementation:</h3>
+        <ol>
+<li>Define tool schemas and interfaces</li>
+<li>Implement secure credential management</li>
+            <li>Add comprehensive logging for audit trails</li>
+            <li>Test with AI SDK 5 (from the repository)</li>
+            <li>Deploy and scale horizontally</li>
+        </ol>
+
+        <h2 id="atlas-ai-mcp-services">How Atlas AI Can Help</h2>
+
+        <p>Building an MCP server requires understanding of authentication, data structures, async patterns, and the MCP protocol itself. Atlas AI has studied the <code>bootcamp-resources</code> curriculum and <code>typescript-next-starter</code> reference patterns.</p>
+
+        <p><strong>Our MCP Services:</strong></p>
+
+        <ul>
+<li><strong>MCP Server Development</strong>: Custom server creation for your specific tools and databases</li>
+            <li><strong>Tool Standardization</strong>: Convert existing APIs into MCP-compliant tools</li>
+            <li><strong>Integration Testing</strong>: We validate all endpoints against the MCP specification</li>
+            <li><strong>Deployment</strong>: We deploy your MCP servers with observability</li>
+            <li><strong>Security Hardening</strong>: We implement guardrails and validation per <code>bootcamp-resources</code> guidelines</li>
+            <li><strong>MCP Client Integration</strong>: We integrate your AI agents with our MCP servers using AI SDK 5</li>
+        </ul>
+
+        <h3>Example MCP Servers We've Built:</h3>
+<ul>
+<li><strong>Database Connectors</strong>: PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch</li>
+            <li><strong>API Wrappers</strong>: Salesforce, HubSpot, Stripe, Slack, GitHub, Notion</li>
+            <strong>Internal Tools</strong>: Active Directory, Jira, Confluence, internal knowledge bases</li>
+            <strong>Business Logic</strong>: ERP integration, CRM workflows, custom business logic exposures</li>
+        </ul>
+
+        <h3>Why Choose Atlas AI for MCP?</h3>
+
+        <p>We understand both the <code>typescript-next-starter</code> patterns and the enterprise requirements from <code>bootcamp-resources</code>. We bridge the gap between the open-source MCP ecosystem and enterprise needs.</p>
+
+        <p><strong>Our Advantages:</strong></p>
+
+        <ul>
+<li>We've studied the reference implementations and patterns in your repositories.</li>
+            <li>We understand production requirements from enterprise systems.</li>
+            <li>We've implemented guardrails and validation as per the bootcamp curriculum.</li>
+            <li>We know what "Context Engineering" means for production RAG systems.</li>
+            <li>We can help you decide whether to use off-the-shelf MCP servers or build custom ones.</li>
+        </ul>
+
+        <h3>Common Enterprise Scenarios:</h3>
+
+        <ul>
+<li><strong>Customer Support Automation</strong>: AI agent pulls knowledge bases (Notion, Confluence, Zendesk) via MCP servers and responds to customer queries with source attribution.</li>
+<li><strong>Data Science Assistant</strong>: AI agent accesses PostgreSQL databases and Spark clusters via MCP servers for data analysis and visualization.</li>
+<li><strong>Financial Assistant</strong>: AI agent queries financial systems and data warehouses via MCP servers for reporting and forecasting.</li>
+</ul>
+
+        <h3>What We Need From You</h3>
+
+        <ul>
+<li><strong>Requirements Definition</strong>: What business logic should the AI be able to execute?</li>
+            <strong>Data Access</strong>: Which data sources should the AI be able to read and update?</li>
+            <strong>Security Requirements</strong>: Who should be able to access what data?</li>
+            <strong>Compliance Requirements</strong>: Are there specific logging or audit requirements?</li>
+        </ul>
+
+        <h3>Typical Timeline</h3>
+
+        <ul>
+<li><strong>Discovery</strong>: 1-2 weeks - Define requirements and architecture</li>
+            <li><strong>MCP Server Development</strong>: 2-6 weeks - Build and test custom servers</li>
+            <li><strong>Integration Testing</strong>: 1 week - Validate against AI SDK 5 patterns</li>
+            <li><strong>Production Deployment</strong>: 1 week - Deploy with observability</li>
+            <li><strong>Documentation</strong>: 1 week - Create documentation and knowledge base</li>
+        </ul>
+
+        <p><strong>Total</strong>: 6-12 weeks for custom MCP servers with enterprise-grade security and scalability.</p>
+
+        <p><strong>Quick Start Option</strong>: We can also deploy pre-built MCP servers for common tools (Slack, Notion, Google Drive, Salesforce) in 1-2 weeks.</p>
+
+        <h3>Next Steps</h3>
+
+        <p>MCP is a transformative technology that turns AI from a chat tool into a secure operator inside your systems. Atlas AI has the patterns and expertise to help you implement this correctly.</p>
+
+        <p>Ready to make AI useful for your business? Let's talk.</p>
+
+        <p><a href="#contact" style="display: inline-block; background: var(--accent); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">Book a Strategy Call</a></p>
+    </article>
+</body>
+</html>
