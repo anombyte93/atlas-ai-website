@@ -19,17 +19,17 @@ export const leadSubmissionSchema = z.object({
     .max(255, 'Company name must be less than 255 characters')
     .trim()
     .optional(),
-  teamSize: z.enum(['1-10', '11-50', '51-200', '200+'])
+  teamSize: z.enum(['1-5', '6-20', '21-50', '51-200', '200+'])
     .optional(),
-  timeline: z.enum(['immediately', '1-3 months', '3-6 months', '6+ months', 'just exploring'])
+  timeline: z.enum(['ASAP', '1-2 months', '3-6 months', '6+ months', 'Just exploring'])
     .optional(),
-  budget: z.enum(['$5,000-10,000', '$10,000-25,000', '$25,000-50,000', '$50,000+'])
+  budget: z.enum(['<$5,000', '$5-10,000', '$10-25,000', '$25,000-50,000', '$50,000+'])
     .optional(),
   message: z.string()
     .max(5000, 'Message must be less than 5000 characters')
     .trim()
     .optional(),
-  referral: z.enum(['client', 'colleague', 'event', 'search', 'social', 'other'])
+  referral: z.enum(['Google', 'LinkedIn', 'Referral', 'Social media', 'Other'])
     .optional(),
 })
 

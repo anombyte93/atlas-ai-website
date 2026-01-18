@@ -21,9 +21,10 @@ export function calculateLeadScore(data: LeadData): number {
   // Team size scoring (up to 20 points)
   if (data.teamSize) {
     const teamSizeMap: Record<string, number> = {
-      '1-10': 5,
-      '11-50': 10,
-      '51-200': 15,
+      '1-5': 10,
+      '6-20': 15,
+      '21-50': 20,
+      '51-200': 25,
       '200+': 20,
     }
     score += teamSizeMap[data.teamSize] || 0
@@ -32,11 +33,11 @@ export function calculateLeadScore(data: LeadData): number {
   // Timeline scoring (up to 15 points)
   if (data.timeline) {
     const timelineMap: Record<string, number> = {
-      'immediately': 15,
-      '1-3 months': 12,
+      'ASAP': 15,
+      '1-2 months': 12,
       '3-6 months': 8,
       '6+ months': 4,
-      'just exploring': 2,
+      'Just exploring': 2,
     }
     score += timelineMap[data.timeline] || 0
   }
@@ -44,8 +45,9 @@ export function calculateLeadScore(data: LeadData): number {
   // Budget scoring (up to 25 points)
   if (data.budget) {
     const budgetMap: Record<string, number> = {
-      '$5,000-10,000': 10,
-      '$10,000-25,000': 18,
+      '<$5,000': 5,
+      '$5-10,000': 12,
+      '$10-25,000': 18,
       '$25,000-50,000': 25,
       '$50,000+': 25,
     }
@@ -68,11 +70,11 @@ export function calculateLeadScore(data: LeadData): number {
   // Referral bonus (up to 15 points)
   if (data.referral) {
     const referralMap: Record<string, number> = {
-      'client': 15,
-      'colleague': 12,
-      'event': 10,
-      'search': 5,
-      'social': 7,
+      'Google': 15,
+      'LinkedIn': 12,
+      'Referral': 15,
+      'Social media': 10,
+      'Other': 5,
     }
     score += referralMap[data.referral] || 5
   }

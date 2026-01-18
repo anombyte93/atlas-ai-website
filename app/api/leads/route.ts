@@ -9,8 +9,20 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
+    // Transform snake_case (from form) to camelCase (for database)
+    const transformedBody = {
+      name: body.name,
+      email: body.email,
+      company: body.company,
+      teamSize: body.team_size,
+      timeline: body.timeline,
+      budget: body.budget,
+      message: body.message,
+      referral: body.referral,
+    }
+
     // Validate and sanitize input
-    const validatedData = validateLeadSubmission(body)
+    const validatedData = validateLeadSubmission(transformedBody)
 
     // Calculate lead score and qualification
     const scoredLead = qualifyLead(validatedData)
