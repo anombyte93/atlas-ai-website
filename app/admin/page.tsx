@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getUser, isSupabaseConfigured } from '@/lib/supabase-server'
+import { isAdminUser } from '@/lib/admin-check'
 import { db } from '@/src/db'
 import { leads, activityLogs } from '@/src/db/schema'
 import { desc, eq, sql } from 'drizzle-orm'
@@ -26,6 +27,29 @@ export default async function AdminDashboard() {
 
   if (!user) {
     redirect('/login')
+  }
+
+  // CRITICAL: Check if user is actually an admin
+  // This prevents any authenticated Supabase user from accessing admin routes
+  const isAdmin = await isAdminUser(user.email || '')
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+          <h1 className="text-2xl font-bold mb-4 text-center text-red-600">Access Denied</h1>
+          <p className="text-center text-gray-600 mb-4">
+            You don&apos;t have permission to access the admin dashboard.
+          </p>
+          <p className="text-center text-sm text-gray-500">
+            If you believe this is an error, contact{' '}
+            <a href="mailto:contact@atlas-ai.au" className="text-blue-600 hover:underline">
+              contact@atlas-ai.au
+            </a>
+          </p>
+        </div>
+      </div>
+    )
   }
 
   // Fetch leads with pagination

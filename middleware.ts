@@ -57,7 +57,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { session } } = await supabase.auth.getSession()
 
-  // Protect admin routes
+  // Protect admin routes - check if user is authenticated
+  // Admin verification happens in the server component
   if (request.nextUrl.pathname.startsWith('/admin')) {
     if (!session) {
       return NextResponse.redirect(new URL('/login', request.url))

@@ -3,7 +3,7 @@ import { pgTable, uuid, varchar, text, timestamp, boolean, integer, index } from
 export const leads = pgTable('leads', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
-  email: varchar('email', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
   company: varchar('company', { length: 255 }),
   teamSize: varchar('team_size', { length: 50 }),
   timeline: varchar('timeline', { length: 100 }),
