@@ -7,38 +7,8 @@ import { eq, desc, and } from 'drizzle-orm'
 import { getUser } from '@/lib/supabase-server'
 import { isAdminUser } from '@/lib/admin-check'
 
-// Optional rate limiting (only if Upstash Redis is configured)
-let ratelimit: any = null
-if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-  try {
-    const { Ratelimit } = require('@upstash/ratelimit')
-    const { Redis } = require('@upstash/redis')
-    ratelimit = new Ratelimit({
-      redis: Redis.fromEnv(),
-      limiter: Ratelimit.slidingWindow(5, '1h'),
-      analytics: false, // Disabled: requires /pipeline endpoint
-      prefix: 'atlas_ai:lead_submission',
-    })
-  } catch (error) {
-    console.warn('Rate limiting disabled: Upstash Redis not configured')
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting check (prevents spam and DoS attacks) - only if configured
-    if (ratelimit) {
-      const ip = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? 'anonymous'
-      const { success } = await ratelimit.limit(ip)
-
-      if (!success) {
-        return NextResponse.json(
-          { error: 'Too many submissions. Please try again later.' },
-          { status: 429 } // HTTP 429 Too Many Requests
-        )
-      }
-    }
-
     const body = await request.json()
 
     // Transform snake_case (from form) to camelCase (for database/API layer)
