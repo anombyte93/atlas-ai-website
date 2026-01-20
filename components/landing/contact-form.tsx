@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -94,10 +95,10 @@ export function ContactForm() {
           {/* Contact Info */}
           <div>
             <h2 className="serif text-[clamp(2rem,4vw,2.75rem)] font-normal mb-6">
-              Ready to optimize?
+              Serious about governed AI?
             </h2>
             <p className="opacity-85 mb-8 leading-relaxed">
-              Book a discovery call to explore a $100k+ AI engagement built around your profit, performance, and security goals.
+              Let's talk about what responsible AI looks like for your business. We start with a governance conversation, not a sales pitch.
             </p>
 
             <div className="flex flex-col gap-4">
@@ -205,14 +206,14 @@ export function ContactForm() {
                   </div>
 
                   <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2" id="service-label">What are you looking for? *</label>
+                    <label className="block text-sm font-medium mb-2" id="service-label">How can we help? *</label>
                     <div
                       role="radiogroup"
                       aria-labelledby="service-label"
                       aria-describedby={errors.service ? 'service-error' : undefined}
                       className="grid grid-cols-2 gap-3"
                     >
-                      {['Profit Optimization', 'Performance Automation', 'Cybersecurity AI', 'Custom AI Infrastructure', 'Not sure yet'].map((service) => (
+                      {['AI Readiness Assessment', 'Governed AI Workflow', 'Evidence & Observability', 'Team Enablement', 'Not sure yet'].map((service) => (
                         <div key={service} className="radio-option relative">
                           <input
                             type="radio"

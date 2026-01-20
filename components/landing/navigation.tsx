@@ -36,6 +36,12 @@ export function Navigation() {
         <Link href="#services" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
           Services
         </Link>
+        <Link href="#governance" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
+          Governance
+        </Link>
+        <Link href="#case-studies" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
+          Case Studies
+        </Link>
         <Link href="#process" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
           Process
         </Link>
@@ -82,6 +88,20 @@ export function Navigation() {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
+          </Link>
+          <Link
+            href="#governance"
+            className="text-[var(--charcoal)] p-4 hover:bg-gray-50 rounded-lg -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Governance
+          </Link>
+          <Link
+            href="#case-studies"
+            className="text-[var(--charcoal)] p-4 hover:bg-gray-50 rounded-lg -ml-4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Case Studies
           </Link>
           <Link
             href="#process"
