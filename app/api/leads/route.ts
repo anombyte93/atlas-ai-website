@@ -16,7 +16,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
     ratelimit = new Ratelimit({
       redis: Redis.fromEnv(),
       limiter: Ratelimit.slidingWindow(5, '1h'),
-      analytics: true,
+      analytics: false, // Disabled: requires /pipeline endpoint
       prefix: 'atlas_ai:lead_submission',
     })
   } catch (error) {
