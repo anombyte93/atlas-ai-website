@@ -1,4 +1,5 @@
 # Dockerfile for Railway deployment
+# Cache bust: 2025-01-20-v2 - force complete rebuild
 FROM node:20-alpine AS base
 
 # Install dependencies only when needed
