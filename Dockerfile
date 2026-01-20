@@ -8,6 +8,8 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json* ./
+# Cache bust: force reinstall when package.json changes
+ARG CACHEBUST=1
 RUN npm ci
 
 # Rebuild the source code only when needed
