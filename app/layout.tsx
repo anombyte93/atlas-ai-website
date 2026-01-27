@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   title: "Atlas AI - AI That Works For Your Business",
   description: "Atlas AI - Custom AI tools and automation for Australian businesses. Save time, cut costs, and compete smarter.",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>",
+    icon: "/logo-icon.png",
+    apple: "/logo-icon.png",
   },
 };
 

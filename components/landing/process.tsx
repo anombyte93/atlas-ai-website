@@ -37,7 +37,7 @@ export function Process() {
     <section id="process" className="py-32 px-6">
       <div className="container-custom">
         <div className="text-center mb-20">
-          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--accent)] mb-4 block">
+          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--cyan)] mb-4 block">
             Process transparency builds trust
           </span>
           <h2 className="serif text-[clamp(2rem,4vw,3rem)] font-normal mb-6">
@@ -56,11 +56,11 @@ export function Process() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-[1200px] mx-auto">
           {steps.map((step) => (
             <div key={step.number} className="text-center">
-              <div className="w-16 h-16 bg-[var(--accent)] rounded-full flex items-center justify-center mx-auto mb-4 font-semibold text-xl text-white">
+              <div className="w-16 h-16 bg-[var(--cyan)] rounded-full flex items-center justify-center mx-auto mb-4 font-semibold text-xl text-white">
                 {step.number}
               </div>
               <h4 className="text-lg font-semibold mb-1">{step.title}</h4>
-              <p className="text-[var(--accent)] text-sm font-medium mb-3">{step.subtitle}</p>
+              <p className="text-[var(--cyan)] text-sm font-medium mb-3">{step.subtitle}</p>
               <p className="text-[var(--muted)] text-sm leading-relaxed">{step.description}</p>
             </div>
           ))}

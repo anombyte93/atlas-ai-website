@@ -5,7 +5,7 @@ export function Governance() {
       <div className="container-custom">
         <div className="max-w-[900px] mx-auto">
           <div className="text-center mb-16">
-            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--accent)] mb-4 block">
+            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--cyan)] mb-4 block">
               Why serious buyers lean in
             </span>
             <h2 className="serif text-[clamp(2rem,4vw,3rem)] font-normal mb-6">
@@ -18,7 +18,7 @@ export function Governance() {
 
           <div className="mb-16">
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-3">
-              <span className="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white text-sm font-bold">1</span>
+              <span className="w-8 h-8 bg-[var(--cyan)] rounded-lg flex items-center justify-center text-white text-sm font-bold">1</span>
               How Atlas-AI handles risk
             </h3>
             <div className="bg-white p-8 rounded-2xl space-y-4">
@@ -36,7 +36,7 @@ export function Governance() {
 
           <div className="mb-16">
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-3">
-              <span className="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white text-sm font-bold">2</span>
+              <span className="w-8 h-8 bg-[var(--cyan)] rounded-lg flex items-center justify-center text-white text-sm font-bold">2</span>
               How decisions are validated
             </h3>
             <div className="bg-white p-8 rounded-2xl space-y-4">
@@ -54,7 +54,7 @@ export function Governance() {
 
           <div className="mb-16">
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-3">
-              <span className="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white text-sm font-bold">3</span>
+              <span className="w-8 h-8 bg-[var(--cyan)] rounded-lg flex items-center justify-center text-white text-sm font-bold">3</span>
               How outputs are audited
             </h3>
             <div className="bg-white p-8 rounded-2xl space-y-4">

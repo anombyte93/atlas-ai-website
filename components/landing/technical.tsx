@@ -40,7 +40,7 @@ export function Technical() {
               key={index}
               className="bg-white/5 p-8 rounded-2xl border border-white/10"
             >
-              <h3 className="text-xl font-semibold mb-3 text-[var(--accent-light)]">
+              <h3 className="text-xl font-semibold mb-3 text-[var(--cyan-light)]">
                 {card.title}
               </h3>
               <p className="opacity-90 mb-4 text-[0.9375rem] leading-relaxed">

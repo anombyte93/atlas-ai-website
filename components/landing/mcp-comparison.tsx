@@ -11,12 +11,12 @@ export function MCPComparison() {
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] overflow-hidden">
+        <div className="bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] overflow-hidden">
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="text-left p-6 md:p-7 bg-[var(--accent)] text-white font-medium">Old Way (Generic AI)</th>
-                <th className="text-left p-6 md:p-7 bg-[var(--accent)] text-white font-medium">MCP Way (Atlas AI)</th>
+                <th className="text-left p-6 md:p-7 bg-[var(--cyan)] text-white font-medium">Old Way (Generic AI)</th>
+                <th className="text-left p-6 md:p-7 bg-[var(--cyan)] text-white font-medium">MCP Way (Atlas AI)</th>
               </tr>
             </thead>
             <tbody>
@@ -45,15 +45,15 @@ export function MCPComparison() {
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-8 mt-8">
-          <div className="bg-[var(--cream)] p-12 rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
+          <div className="bg-[var(--cream)] p-12 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
             <h3 className="text-xl font-semibold mb-3">Operations</h3>
             <p className="text-[var(--muted)] text-[0.9375rem] leading-relaxed">Real-time data access for forecasting, reporting, and decision-making.</p>
           </div>
-          <div className="bg-[var(--cream)] p-12 rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
+          <div className="bg-[var(--cream)] p-12 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
             <h3 className="text-xl font-semibold mb-3">Security</h3>
             <p className="text-[var(--muted)] text-[0.9375rem] leading-relaxed">Controlled permissions, logging, and data boundaries built in.</p>
           </div>
-          <div className="bg-[var(--cream)] p-12 rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
+          <div className="bg-[var(--cream)] p-12 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
             <h3 className="text-xl font-semibold mb-3">Performance</h3>
             <p className="text-[var(--muted)] text-[0.9375rem] leading-relaxed">Milliseconds, not hours — automations run instantly.</p>
           </div>

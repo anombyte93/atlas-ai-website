@@ -3,12 +3,18 @@
 @tailwind utilities;
 
 :root {
+  /* Brand colors from Atlas logo */
+  --navy: #0f172a;
+  --navy-dark: #0c1220;
+  --cyan: #06b6d4;
+  --cyan-dark: #0891b2;
+  --cyan-light: #22d3ee;
+
+  /* Supporting colors */
   --cream: #FAF9F6;
   --warm-white: #FEFDFB;
-  --charcoal: #1a1a1a;
-  --muted: #666;
-  --accent: #2d5a4a;
-  --accent-light: #3d7a6a;
+  --charcoal: #0a0a0a;
+  --muted: #64748b;
   --error: #dc2626;
   --success: #059669;
 }
@@ -34,18 +40,18 @@ body {
 
   /* Buttons */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-[0.9375rem] font-medium transition-all duration-200 cursor-pointer border-none no-underline;
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg text-[0.9375rem] font-medium transition-all duration-200 cursor-pointer border-none no-underline;
   }
 
   .btn-primary {
-    background: var(--accent);
+    background: var(--cyan);
     color: white;
   }
 
   .btn-primary:hover {
-    background: var(--accent-light);
+    background: var(--cyan-dark);
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(45, 90, 74, 0.3);
+    box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
   }
 
   .btn-white {
@@ -90,7 +96,7 @@ body {
 .form-group input,
 .form-group select,
 .form-group textarea {
-    @apply w-full px-4 py-3.5 border border-[#ddd] rounded-xl text-base transition-colors duration-200;
+    @apply w-full px-4 py-3.5 border border-[#ddd] rounded-lg text-base transition-colors duration-200;
     font-family: inherit;
 }
 
@@ -98,8 +104,8 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(45, 90, 74, 0.1);
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
 .form-group input.error,
@@ -108,9 +114,9 @@ body {
 }
 
 .radio-option input:checked + label {
-    border-color: var(--accent);
-    background: rgba(45, 90, 74, 0.05);
-    color: var(--accent);
+    border-color: var(--cyan);
+    background: rgba(6, 182, 212, 0.05);
+    color: var(--cyan);
     font-weight: 500;
 }
 

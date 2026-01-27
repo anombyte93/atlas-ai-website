@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,17 +22,28 @@ export function Navigation() {
   };
 
   return (
-    <nav 
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 px-5 py-4 md:px-10 md:py-5 flex justify-between items-center transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-sm' 
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-sm'
           : 'bg-transparent'
       }`}
     >
-      <Link href="#" className={`text-xl font-semibold no-underline tracking-tighter ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
-        Atlas AI
+      <Link href="#" className="flex items-center gap-3 no-underline">
+        <div className="relative w-10 h-10">
+          <Image
+            src="/logo-icon.png"
+            alt="Atlas AI"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <span className={`text-lg font-semibold tracking-tight ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
+          Atlas AI
+        </span>
       </Link>
-      
+
       <div className="hidden md:flex gap-10 items-center">
         <Link href="#services" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
           Services
@@ -48,7 +60,7 @@ export function Navigation() {
         <Link href="#contact" className={`text-sm no-underline opacity-90 hover:opacity-100 transition-opacity ${isScrolled ? 'text-[var(--charcoal)]' : 'text-white'}`}>
           Contact
         </Link>
-        <Link href="#contact" className="btn btn-white !py-2.5 !px-6">
+        <Link href="#contact" className="btn btn-primary !py-2.5 !px-6">
           Get Started
         </Link>
       </div>

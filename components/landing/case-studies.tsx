@@ -34,7 +34,7 @@ export function CaseStudies() {
     <section id="case-studies" className="py-32 px-6 bg-[var(--cream)]">
       <div className="container-custom">
         <div className="text-center mb-20">
-          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--accent)] mb-4 block">
+          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-[var(--cyan)] mb-4 block">
             Evidence, not logos
           </span>
           <h2 className="serif text-[clamp(2rem,4vw,3rem)] font-normal mb-6">
@@ -51,9 +51,9 @@ export function CaseStudies() {
               <div className="flex items-start justify-between mb-6 pb-6 border-b border-black/10">
                 <div>
                   <h3 className="text-xl font-semibold mb-1">{study.company}</h3>
-                  <p className="text-[var(--accent)] text-sm font-medium">{study.industry}</p>
+                  <p className="text-[var(--cyan)] text-sm font-medium">{study.industry}</p>
                 </div>
-                <div className="bg-[var(--accent)] text-white px-4 py-2 rounded-lg">
+                <div className="bg-[var(--cyan)] text-white px-4 py-2 rounded-lg">
                   <p className="text-sm font-semibold">Verified</p>
                 </div>
               </div>

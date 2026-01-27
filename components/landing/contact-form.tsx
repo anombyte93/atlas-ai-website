@@ -137,14 +137,14 @@ export function ContactForm() {
           </div>
 
           {/* Multi-step Form */}
-          <div className="bg-white rounded-3xl p-12 text-[var(--charcoal)]">
+          <div className="bg-white rounded-xl p-12 text-[var(--charcoal)]">
             {/* Progress Indicators */}
             <div className="flex justify-center gap-2 mb-8">
               {[1, 2, 3].map((step) => (
                 <div
                   key={step}
                   className={`progress-dot w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    step === currentStep ? 'bg-[var(--accent)] scale-125' : step < currentStep ? 'bg-[var(--success)]' : 'bg-[#ddd]'
+                    step === currentStep ? 'bg-[var(--cyan)] scale-125' : step < currentStep ? 'bg-[var(--success)]' : 'bg-[#ddd]'
                   }`}
                   data-step={step}
                 />
@@ -226,7 +226,7 @@ export function ContactForm() {
                           />
                           <label
                             htmlFor={`service_${service}`}
-                            className="flex items-center justify-center p-4 border border-[#ddd] rounded-xl cursor-pointer transition-all text-sm text-center hover:border-[var(--accent)]"
+                            className="flex items-center justify-center p-4 border border-[#ddd] rounded-xl cursor-pointer transition-all text-sm text-center hover:border-[var(--cyan)]"
                           >
                             {service}
                           </label>
