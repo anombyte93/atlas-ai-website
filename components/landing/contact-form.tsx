@@ -64,10 +64,22 @@ export function ContactForm() {
     setSubmitError(null); // Clear previous error when retrying
 
     try {
-      const response = await fetch('/api/leads', {
+      // Using Formspree for static site form handling
+      // Replace FORMSPREE_FORM_ID with actual form ID from formspree.io
+      const response = await fetch('https://formspree.io/f/x_FORM_ID', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)  // Backend handles scoring
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          company: formData.company,
+          team_size: formData.team_size,
+          timeline: formData.timeline,
+          message: formData.message,
+          referral: formData.referral,
+          _subject: `Atlas AI Contact: ${formData.name} from ${formData.company || 'No company'}`,
+        }),
       });
 
       if (response.ok) {
@@ -85,7 +97,7 @@ export function ContactForm() {
   };
 
   const openCalBooking = () => {
-    window.open('https://cal.com/atlas-ai/discovery', '_blank');
+    window.open('https://cal.com/atlas-ai/discovery', '_blank,noreferrer,noopener');
   };
 
   return (
