@@ -379,14 +379,14 @@ Referral: ${formData.referral || 'Not provided'}
                   </div>
                   <h3 className="text-2xl mb-3">Thanks for reaching out!</h3>
                   <p className="text-[var(--muted)] mb-6">
-                    We&apos;ve received your request and will get back to you within 24 hours.
+                    Your email client should have opened with your inquiry pre-filled. Please click Send to complete your submission. We typically respond within 24 hours.
                   </p>
 
                   {/* Always show booking prompt - backend handles lead qualification */}
                   <div className="bg-[rgba(45,90,74,0.05)] rounded-xl p-6">
-                    <p className="text-[var(--charcoal)] mb-4"><strong>Want to skip the wait?</strong> Book a discovery call directly:</p>
+                    <p className="text-[var(--charcoal)] mb-4"><strong>Prefer to book directly?</strong> Email us to schedule a discovery call:</p>
                     <button type="button" onClick={openCalBooking} className="btn btn-primary">
-                      Book a 30-min call
+                      Email to book a call
                       <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                         <rect x="3" y="4" width="18" height="18" rx="2"/>
                         <path d="M16 2v4M8 2v4M3 10h18"/>
