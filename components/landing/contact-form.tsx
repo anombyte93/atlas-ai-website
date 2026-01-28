@@ -61,43 +61,34 @@ export function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitError(null); // Clear previous error when retrying
 
-    try {
-      // Using Formspree for static site form handling
-      // Replace FORMSPREE_FORM_ID with actual form ID from formspree.io
-      const response = await fetch('https://formspree.io/f/x_FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          service: formData.service,
-          company: formData.company,
-          team_size: formData.team_size,
-          timeline: formData.timeline,
-          message: formData.message,
-          referral: formData.referral,
-          _subject: `Atlas AI Contact: ${formData.name} from ${formData.company || 'No company'}`,
-        }),
-      });
+    // Construct email body from form data
+    const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Service: ${formData.service}
+Company: ${formData.company || 'Not provided'}
+Team Size: ${formData.team_size || 'Not provided'}
+Timeline: ${formData.timeline || 'Not provided'}
+Message: ${formData.message || 'Not provided'}
+Referral: ${formData.referral || 'Not provided'}
+    `.trim();
 
-      if (response.ok) {
-        setCurrentStep(4); // Success step
-      } else {
-        const data = await response.json().catch(() => ({ error: 'Unknown error' }));
-        setSubmitError(data.error || 'Something went wrong. Please try again or email us at contact@atlas-ai.au');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setSubmitError('Something went wrong. Please try again or email us at contact@atlas-ai.au');
-    } finally {
+    // Open email client with pre-filled information
+    const subject = encodeURIComponent(`Atlas AI Inquiry: ${formData.name} - ${formData.service}`);
+    const body = encodeURIComponent(emailBody);
+    window.location.href = `mailto:contact@atlas-ai.au?subject=${subject}&body=${body}`;
+
+    // Show success state after brief delay
+    setTimeout(() => {
+      setCurrentStep(4);
       setIsSubmitting(false);
-    }
+    }, 500);
   };
 
   const openCalBooking = () => {
-    window.open('https://cal.com/atlas-ai/discovery', '_blank,noreferrer,noopener');
+    // Use email fallback instead of broken Cal.com link
+    window.location.href = 'mailto:contact@atlas-ai.au?subject=Atlas%20AI%20Strategy%20Call%20Booking';
   };
 
   return (
