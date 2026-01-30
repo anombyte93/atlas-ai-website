@@ -1,5 +1,16 @@
+import { HeroSection } from '@/lib/sanity/queries';
+
+interface HeroProps {
+  heroData?: HeroSection | null;
+}
+
 /* eslint-disable react/no-unescaped-entities */
-export function Hero() {
+export function Hero({ heroData }: HeroProps) {
+  // Use Sanity data if available, otherwise use defaults
+  const headline = heroData?.headline || 'Governed AI systems for businesses that can\'t afford guesswork';
+  const subheadline = heroData?.subheadline || 'We design and install auditable AI workflows that reduce cost, risk, and time-to-decision.';
+  const cta = heroData?.cta || 'Book a Strategy Call';
+
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
       <div
@@ -10,14 +21,14 @@ export function Hero() {
       ></div>
       <div className="relative z-10 text-center text-white max-w-[800px] px-6">
         <h1 className="serif text-[clamp(2rem,5vw,3.5rem)] font-semibold tracking-tight mb-6 drop-shadow-[0_2px_40px_rgba(0,0,0,0.3)]">
-          Governed AI systems for businesses that can't afford guesswork
+          {headline}
         </h1>
         <p className="text-lg opacity-90 max-w-[600px] mx-auto mb-12 leading-relaxed">
-          We design and install auditable AI workflows that reduce cost, risk, and time-to-decision.
+          {subheadline}
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap">
-          <a href="#contact" className="btn btn-white">Book a Strategy Call</a>
+          <a href="#contact" className="btn btn-white">{cta}</a>
           <a href="#process" className="btn btn-secondary">See How It Works</a>
         </div>
       </div>

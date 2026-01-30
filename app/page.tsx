@@ -10,17 +10,27 @@ import { Testimonial } from '@/components/landing/testimonial';
 import { MCPComparison } from '@/components/landing/mcp-comparison';
 import { ContactForm } from '@/components/landing/contact-form';
 import { Footer } from '@/components/landing/footer';
+import { getLandingPage } from '@/lib/sanity/queries';
 
-export default function Home() {
+/**
+ * Home Page - Server Component
+ *
+ * Fetches content from Sanity CMS and passes it to child components.
+ * Falls back to default content if Sanity data is unavailable.
+ */
+export default async function Home() {
+  // Fetch content from Sanity CMS
+  const sanityData = await getLandingPage();
+
   return (
     <main className="min-h-screen">
       <Navigation />
-      <Hero />
-      <Services />
+      <Hero heroData={sanityData?.hero} />
+      <Services servicesData={sanityData?.services} />
       <Governance />
       <CaseStudies />
       <Process />
-      <Pricing />
+      <Pricing pricingData={sanityData?.pricing} />
       <Technical />
       <Testimonial />
       <MCPComparison />

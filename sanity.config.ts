@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 
 export default defineConfig({
-  projectId: 'atlas-ai-website',
+  projectId: 'gdf6dsgi',
   dataset: 'production',
   title: 'Atlas AI Website',
   apiVersion: '2024-01-01',
