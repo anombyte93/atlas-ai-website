@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 export default function AdminPage() {
   return (
     <>
+      <div id="nc-root" />
       <Script
+        id="decap-cms-script"
         src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"
         strategy="afterInteractive"
       />

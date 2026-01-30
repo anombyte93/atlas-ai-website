@@ -4,7 +4,7 @@ backend:
   branch: main
   base_url: https://api.github.com
   auth_endpoint: auth
-  local_backend: true
+  local_backend: false
 
 media_folder: "public/images"
 public_folder: "/images"
