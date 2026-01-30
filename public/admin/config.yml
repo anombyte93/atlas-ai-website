@@ -1,0 +1,70 @@
+backend:
+  name: github
+  repo: anombyte93/atlas-ai-website
+  branch: main
+  base_url: https://api.github.com
+  auth_endpoint: auth
+  local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "content/pages/index.md"
+        label: "Landing Page"
+        name: "index"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Subheadline", name: "subheadline", widget: "string" }
+              - { label: "CTA Button", name: "cta", widget: "string" }
+          - label: "Services Section"
+            name: "services"
+            widget: "object"
+            fields:
+              - { label: "Section Title", name: "title", widget: "string" }
+              - label: "Service Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "description", widget: "string" }
+          - label: "Pricing Section"
+            name: "pricing"
+            widget: "object"
+            fields:
+              - { label: "Section Title", name: "title", widget: "string" }
+              - label: "Pricing Plans"
+                name: "plans"
+                widget: "list"
+                fields:
+                  - { label: "Plan Name", name: "name", widget: "string" }
+                  - { label: "Price", name: "price", widget: "string" }
+                  - { label: "Description", name: "description", widget: "string" }
+                  - { label: "Features", name: "features", widget: "string", hint: "Comma separated" }
+
+  - name: "components"
+    label: "Site Components"
+    files:
+      - file: "content/components/contact.md"
+        label: "Contact Section"
+        name: "contact"
+        fields:
+          - { label: "Section Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - label: "Contact Methods"
+            name: "methods"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Icon/Link", name: "icon", widget: "string" }
