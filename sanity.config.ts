@@ -90,6 +90,34 @@ export default defineConfig({
               },
             ],
           },
+          {
+            type: 'object',
+            name: 'testimonial',
+            title: 'Testimonial Section',
+            fields: [
+              { type: 'text', name: 'quote', title: 'Quote' },
+              { type: 'string', name: 'author', title: 'Author' },
+            ],
+          },
+          {
+            type: 'array',
+            name: 'caseStudies',
+            title: 'Case Studies',
+            of: [
+              {
+                type: 'object',
+                fields: [
+                  { type: 'string', name: 'company', title: 'Company' },
+                  { type: 'string', name: 'industry', title: 'Industry' },
+                  { type: 'text', name: 'problem', title: 'Problem' },
+                  { type: 'text', name: 'whatWasntAutomated', title: 'What Was Not Automated' },
+                  { type: 'text', name: 'whatWasBuilt', title: 'What Was Built' },
+                  { type: 'text', name: 'howValidated', title: 'How Validated' },
+                  { type: 'text', name: 'outcome', title: 'Outcome' },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],

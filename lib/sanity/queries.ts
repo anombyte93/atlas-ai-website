@@ -17,6 +17,8 @@ export interface LandingPage {
   hero?: HeroSection
   services?: ServiceItem[]
   pricing?: PricingSection
+  testimonial?: TestimonialSection
+  caseStudies?: CaseStudy[]
 }
 
 export interface HeroSection {
@@ -40,6 +42,21 @@ export interface PricingPlan {
   price?: string
   description?: string
   features?: string
+}
+
+export interface TestimonialSection {
+  quote?: string
+  author?: string
+}
+
+export interface CaseStudy {
+  company?: string
+  industry?: string
+  problem?: string
+  whatWasntAutomated?: string
+  whatWasBuilt?: string
+  howValidated?: string
+  outcome?: string
 }
 
 /**
@@ -66,6 +83,19 @@ const LANDING_PAGE_QUERY = `*[_type == "landingPage"][0]{
       description,
       features
     }
+  },
+  testimonial{
+    quote,
+    author
+  },
+  caseStudies[]{
+    company,
+    industry,
+    problem,
+    whatWasntAutomated,
+    whatWasBuilt,
+    howValidated,
+    outcome
   }
 }`
 

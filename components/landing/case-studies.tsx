@@ -1,6 +1,13 @@
+import { CaseStudy } from '@/lib/sanity/queries';
+
+interface CaseStudiesProps {
+  caseStudiesData?: CaseStudy[] | null;
+}
+
 /* eslint-disable react/no-unescaped-entities */
-export function CaseStudies() {
-  const cases = [
+export function CaseStudies({ caseStudiesData }: CaseStudiesProps) {
+  // Default case studies - used as fallback when Sanity has no data
+  const defaultCases: CaseStudy[] = [
     {
       company: "Fleet Management SaaS",
       industry: "Logistics",
@@ -29,6 +36,8 @@ export function CaseStudies() {
       outcome: "Drop-off reduced from 40% to 18%. Compliance audit time reduced by 70%."
     }
   ];
+
+  const cases = caseStudiesData && caseStudiesData.length > 0 ? caseStudiesData : defaultCases;
 
   return (
     <section id="case-studies" className="py-32 px-6 bg-[var(--cream)]">

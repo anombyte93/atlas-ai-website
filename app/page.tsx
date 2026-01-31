@@ -28,11 +28,11 @@ export default async function Home() {
       <Hero heroData={sanityData?.hero} />
       <Services servicesData={sanityData?.services} />
       <Governance />
-      <CaseStudies />
+      <CaseStudies caseStudiesData={sanityData?.caseStudies} />
       <Process />
       <Pricing pricingData={sanityData?.pricing} />
       <Technical />
-      <Testimonial />
+      <Testimonial testimonialData={sanityData?.testimonial} />
       <MCPComparison />
       <ContactForm />
       <Footer />
